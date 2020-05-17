@@ -1,0 +1,201 @@
+<html>
+<head>
+    <meta charset="utf-8">
+     
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+    integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"crossorigin="anonymous">
+     
+</head>
+<body class="sigin-body">
+     
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">RLC - Reserva de Carros Online</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" onclick="loadIndex()" href="">Home<span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<main>        
+</main>
+
+
+
+
+    <!--CLIENTE modal-->
+    <div class="modal fade col-lg-12 " id="clienteModal" tabindex="-1" role="dialog" aria-labelledby="clienteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="clienteModalLabel">Cadastro Cliente</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="cliente_cadastro">
+                    <div class="form-group col-12">
+                        <label class="col-form-label">Nome Completo</label>
+                        <input type="text" required="required" pattern="[a-zA-Z\s]+$" minlength="15" maxlength="100" class="form-control" id="nome_c">
+                    </div>
+                    <div class="form-group col-12 ">
+                            <label class="col-form-label">Email</label>
+                            <input type="email" required="required" minlength="15" pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" maxlength="100" class="form-control" id="email_c">
+                    </div>
+                    <div class="row col-12">
+                    <div class="form-group col-6">
+                            <label class="col-form-label">CPF</label>
+                            <input type="text"  required="required" pattern="[0-9]+$" minlength="10" maxlength="10" class="form-control" id="cpf_c">
+                    </div>
+                    <div class="form-group col-6">
+                            <label class="col-form-label">Telefone</label>
+                            <input type="text" required="required" pattern="[0-9]+$" minlength="9" maxlength="12" class="form-control" id="tel_c">
+                    </div>
+                    <!-- Adição de cep -->
+                    <div class="form-group col-6">
+                            <label class="col-form-label">Cep</label>
+                            <input type="text" required="required" pattern="[0-9]+$" minlength="9" maxlength="12" class="form-control" id="cep">
+                    </div>
+                    <!-- Login -->
+                    <div class="form-group col-6">
+                            <label class="col-form-label">Login</label>
+                            <input type="text" required="required" class="form-control" id="login">
+                    </div>
+                    </div>
+                    <div class="form-group col-12">
+                            <label class="col-form-label">Senha</label>
+                            <input type="password" class="form-control" id="senha_c">
+                    </div>
+                    <div class="form-group col-12">
+                            <label class="col-form-label">Confirmação</label>
+                            <input type="password" class="form-control" id="conf_senha_c">
+                    </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="limparFormulariocli()" data-dismiss="modal">Cancelar</button>
+                    <input  type="submit" class="btn btn-primary" value="Cadastrar">
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+    <!-- Carro modal -->
+    <div class="modal fade col-lg-12 " id="carroModal" tabindex="-1" role="dialog" aria-labelledby="carroModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="carroModalLabel">Cadastro Carro</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="carro_cadastro">
+                    <div class="form-group col-12">
+                        <label class="col-form-label">Placa</label>
+                        <input type="text" minlength="7" maxlength="7" class="form-control" id="placa_c">
+                    </div>
+                    <div class="form-group col-12 ">
+                            <label class="col-form-label">Modelo</label>
+                            <input type="text"  required="required" maxlength="40" class="form-control" id="modelo_c">
+                    </div>
+                    <div class="row col-12">
+                    <div class="form-group col-6">
+                            <label class="col-form-label">Marca</label>
+                            <input type="text"  required="required" pattern="[a-zA-Z\s]+$" maxlength="40"  class="form-control" id="marca_c">
+                    </div>
+                    <div class="form-group col-6">
+                            <label class="col-form-label">Km</label>
+                            <input type="number" class="form-control" id="km_c">
+                    </div>
+                    </div>
+                    <div class="form-group col-12">
+                            <label class="col-form-label">Descrição:</label>
+                            <input type="text"  required="required" maxlenght="120" class="form-control" id="descricao_c">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="limparFormulariocar()" data-dismiss="modal">Cancelar</button>
+                    <input  type="submit" class="btn btn-primary"  value="Cadastrar">
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- funcionario modal-->
+    
+    <div class="modal fade col-lg-12 " id="funcionarioModal" tabindex="-1" role="dialog" aria-labelledby="funcionarioModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="funcionarioModalLabel">Cadastro Funcionario</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="funcionario_cadastro">
+                    <div class="form-group col-12">
+                        <label class="col-form-label">Nome Completo</label>
+                        <input type="text" required="required" pattern="[a-zA-Z\s]+$" minlength="15" maxlength="100" class="form-control" id="nome_f">
+                    </div>
+                    <div class="form-group col-12 ">
+                            <label class="col-form-label">Email</label>
+                            <input type="email" required="required" minlength="15" pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" maxlength="100" class="form-control" id="email_f">
+                    </div>
+                    <div class="row col-12">
+                    <div class="form-group col-6">
+                            <label class="col-form-label">CPF</label>
+                            <input type="text" required="required" pattern="[0-9]+$" minlength="10" maxlength="10" class="form-control" id="cpf_f">
+                    </div>
+                    <div class="form-group col-12">
+                            <label class="col-form-label">Senha</label>
+                            <input type="password" class="form-control" id="senha_f">
+                    </div>
+                    <div class="form-group col-12">
+                            <label class="col-form-label">Confirmação</label>
+                            <input type="password" class="form-control" id="conf_senha_f">
+                    </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="limparFormulario()" data-dismiss="modal">Cancelar</button>
+                    <input  type="submit" class="btn btn-primary" value="Cadastrar">
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+    </div>
+      
+   
+<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+<script type=" text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>
+<script type="text/javascript" src="bootstrap/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="bootstrap/js/bootstrap.min.js.map"></script>
+<script src="index.js"></script>
+<script src="js/Cliente_jquery.js"></script> 
+<script src="js/Cliente.js"></script> 
+<script src="js/Funcionario_jquery.js"></script>
+<script src="js/Funcionario.js"></script>  
+<script src="js/Carro.js"></script>
+<script src="js/Carro_jquery.js"></script> 
+
+</body>
+
+
+</html>
+
+
+
