@@ -22,8 +22,8 @@ class PrestadorController {
     }
 
     public function inserir( $request, $response, $args) {
-        $f = $request->getParsedBody();
-        $Prestador = new Prestador(0,$f['nome'],$f['cpf'],$f['email'], $f['senha'],$f['cep'],$f['telefone']);
+        $prestador = $request->getParsedBody();
+        $Prestador = new Prestador(0,$prestador['nome'],$prestador['cpf'],$prestador['email'], $prestador['cep'],$prestador['fone'],$prestador['senha'],$prestador['id_tipo_servico']);
         $dao = new PrestadorDAO;
         $Prestador = $dao->inserir($Prestador);
         return $response->withJson($Prestador,201);    
@@ -31,8 +31,8 @@ class PrestadorController {
     
     public function atualizar($request, $response, $args) {
         $id = $args['id'];
-        $f = $request->getParsedBody();
-        $Prestador = new Prestador($id, $f['nome'], $f['cpf'], $f['email'], $f['senha'],$f['cep'],$f['telefone']);
+        $prestador = $request->getParsedBody();
+        $Prestador = new Prestador($id, $prestador['nome'],$prestador['cpf'],$prestador['email'], $prestador['cep'],$prestador['fone'],$prestador['senha'],$prestador['id_tipo_servico']);
         $dao = new PrestadorDAO;
         $Prestador = $dao->atualizar($Prestador);
     
@@ -42,7 +42,7 @@ class PrestadorController {
     public function deletar($request, $response, $args) {
         $id = $args['id'];
         $dao = new PrestadorDAO;
-        $Prestador = $dao->deletar($id);    
+        $Prestador = $dao->deletar($id);
         return $response->withJson($Prestador);  
     }
 }

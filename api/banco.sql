@@ -57,8 +57,8 @@ telefone bigint not null,
 
 
 insert into clientes(nome,cpf,telefone,email,senha,cep,login)
-values('rod', 144444444, 45613213, 'fddddddddddddfs', 'fdddddddsf', 'fdddddddd', 'ffddddsafasasffsfassfa'),
-('rod', 1222222312, 123213213, 'fasfsaffasafdds', 'dfasfassfaasf', 'f1231231d32', 'fdfasfasafasasffsfassfa');
+values('Felipe', 144444444, 45613213, 'fddddddddddddfs', 'fdddddddsf', 'fdddddddd', 'ffddddsafasasffsfassfa'),
+('Guilherme', 1222222312, 123213213, 'fasfsaffasafdds', 'dfasfassfaasf', 'f1231231d32', 'fdfasfasafasasffsfassfa');
 
 
 select * from clientes
