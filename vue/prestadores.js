@@ -8,6 +8,7 @@ var prestadoresApp = new Vue({
     capa: "",
     novoLivro:{},
     prestadores:[],
+    servicos:[],
     ShowForm: false,
     iptTitulo: "",
     responseGoogleBooks: []
@@ -32,14 +33,26 @@ var prestadoresApp = new Vue({
         // always executed
         console.log("Executado com sucesso!");
       });
+
+      axios.get('localhost/resolveu/api/tipo-servicos')
+      .then(function (response) {
+
+        self.servicos = response.data;
+        // handle success
+        console.log(response);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .finally(function () {
+        // always executed
+        console.log("Executado com sucesso!");
+      });
   },
 
   computed: {
-    LivrosFiltrados() {
-      return this.prestadores.filter((prestador) => {
-        return this.pesquisa.toLowerCase().split(' ').every(v => prestador.nome.toLowerCase().includes(v));
-      });
-    }
+    
   },
 
   methods:{

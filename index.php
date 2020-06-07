@@ -45,7 +45,7 @@
                 <button class="btn facebook-btn social-btn" type="button"><span><i class="fab fa-facebook-f"></i> Logar com Facebook</span> </button>
                 <button class="btn google-btn social-btn" type="button"><span><i class="fab fa-google-plus-g"></i> Logar com Google+</span> </button>
             </div>-->
-            <p style="text-align:center">   </p>
+            <p style="text-align:center"></p>
             <input type="email" id="inputEmail" class="form-control" placeholder="Endereço de E-mail" required="" autofocus="">
             <input type="password" id="inputPassword" class="form-control" placeholder="Senha" required="">
             
@@ -155,7 +155,7 @@
   <!-- ======= Hero Section ======= -->
   <section id="hero">
     <!-- Destaque da pagina e busca-->
-    <div class="container" style="display: none;">
+    <div class="container" style="display: block;">
       <div class="row d-flex align-items-center">
       <div class=" col-lg-6 py-5 py-lg-0 order-2 order-lg-1" data-aos="fade-right">
       <h3 style="color:white">
@@ -166,7 +166,12 @@
       <div class="p-1 bg-light rounded rounded-pill shadow-sm mb-4">
         <div class="input-group">
           <!-- Busca-->
-          <input type="search" placeholder="Encontre aqui o que você procura ?" aria-describedby="button-addon1" class="form-control border-0 bg-light form-control-style">
+          <input type="search" id="buscaServico" placeholder="Encontre aqui o que você procura ?" aria-describedby="button-addon1" class="form-control border-0 bg-light form-control-style">
+
+          <datalist id="buscaServico">
+            <option v-for="servico of servicos" value="{{servico.id}}"></option>
+          </datalist>
+
           <div class="input-group-append">
             <!-- Ação do btn #loginModal |  -->
             <button id="button-addon1" type="submit" data-toggle="modal" data-target="#buscar" class="btn btn-link text-primary"><i class="fa fa-search"></i></button>
@@ -251,7 +256,7 @@
       </div>
     </section>
 <!-- Mostra Perfil Prestador End-->
-
+	
     <!-- ======= About Section ======= -->
     <section id="about" class="about section-bg">
       <div class="container">
