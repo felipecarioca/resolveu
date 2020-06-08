@@ -9,7 +9,7 @@ class ClienteController {
 
     public function inserir( $request, $response, $args) {
         $c = $request->getParsedBody();
-        $Cliente = new Cliente($c['id'],$c['nome'], $c['cpf'], $c['email'],$c['senha'],$c['cep'],$c['telefone'] );
+        $Cliente = new Cliente($c['id'],$c['nome'], $c['cpf'], $c['email'],$c['senha'],$c['cep'],$c['fone'] );
         $dao = new ClienteDAO;
         $Cliente = $dao->inserir($Cliente);
         return $response->withJson($Cliente,201);
@@ -52,7 +52,7 @@ class ClienteController {
     public function logar( $request, $response, $args)
     {
         $c = $request->getParsedBody();
-        //var_dump($c);
+        
         if(is_null($c['email']) || is_null($c['senha'])){
             $msg="Os campos não foram preenchidos por completo";
             return $msg;
