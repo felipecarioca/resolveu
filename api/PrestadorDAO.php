@@ -87,6 +87,21 @@
           
 		    return new Prestador($result->id_prestador,$result->nome,$result->cpf,$result->email, $result->cep,$result->fone, $result->senha, $result->id_tipo_servico);           
         }
+        public function buscarPorIdServ($id)
+        {
+ 		    $query = 'SELECT * FROM Prestador WHERE id_tipo_servico=:id LIMIT 3';		
+            $pdo = PDOFactory::getConexao(); 
+		    $comando = $pdo->prepare($query);
+		    $comando->bindParam (':id', $id);
+		    $comando->execute();
+           
+            $Prestadores=array();	
+		    while($row = $comando->fetch(PDO::FETCH_OBJ)){
+			    $Prestadores[] = new Prestador($row->id_prestador,$row->nome,$row->cpf, $row->email, $row->senha,$row->cep, $row->fone,$row->id_tipo_servico);
+            }
+            return $Prestadores;
+		    
+        }
        
     }
 ?>

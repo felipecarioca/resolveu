@@ -1,75 +1,57 @@
 <?php
 
-include_once('Cliente.php');
-include_once('ClienteDAO.php');
+include_once('TipoServico.php');
+include_once('TipoServicoDAO.php');
 
 
-class ClienteController {
-   
-
-    public function inserir( $request, $response, $args) {
-        $c = $request->getParsedBody();
-        $Cliente = new Cliente($c['id'],$c['nome'], $c['cpf'], $c['email'],$c['senha'],$c['cep'],$c['telefone'] );
-        $dao = new ClienteDAO;
-        $Cliente = $dao->inserir($Cliente);
-        return $response->withJson($Cliente,201);
-
-    }
+class TipoServicoController {
     
-     public function listar($request, $response, $args) {
-        $dao = new ClienteDAO;    
-        $Cliente =  $dao->listar();
-                
-        return $response->withJson($Cliente);    
-    }
-
     public function buscarPorId($request, $response, $args) {
         $id = $args['id'];
         
-        $dao= new ClienteDAO;    
-        $Cliente = $dao->buscarPorId($id);
-        if(is_bool($Cliente)){ echo"Não há dados para este cliente";}
+        $dao= new TipoServicoDAO;    
+        $serv = $dao->buscarPorId($id);
+        if(is_bool($serv)){ echo"Não há dados para este servico";}
         else{
-        return $response->withJson($Cliente);}
+        return $response->withJson($serv);}
     }
-    public function atualizar($request, $response, $args) {
-        $id = $args['id'];
-        $c = $request->getParsedBody();
-        $Cliente = new Cliente($c['id'],$c['nome'], $c['cpf'], $c['email'], $c['cep'],$c['telefone'], $c['senha'] );
-        $dao = new ClienteDAO;
-        $Cliente = $dao->atualizar($Cliente);
-        return $response->withJson($Cliente);    
+    //busca prestador por servico
+    public function buscarPorIdServ($request, $response, $args) {
+        $id = $args['word'];
+        
+        $dao= new TipoServicoDAO;    
+        $serv = $dao->buscarPorIdServ($id);
+        if(is_bool($serv)){ echo"Não há dados para este servico";}
+        else{
+        return $response->withJson($serv);}
     }
-
-    public function deletar($request, $response, $args) {
-        $id = $args['id'];
-
-        $dao = new ClienteDAO;
-        $Cliente = $dao->deletar($id);
-    
-        return $response->withJson($Cliente);  
-    }
-    public function logar( $request, $response, $args)
-    {
-        $c = $request->getParsedBody();
-        //var_dump($c);
-        if(is_null($c['email']) || is_null($c['senha'])){
-            $msg="Os campos não foram preenchidos por completo";
-            return $msg;
-        }   
-        else{        
-            $dao = new ClienteDAO;
-            $Cliente = $dao->logar($c['email'],$c['senha']);
-            if(is_bool($Cliente))
-            {
-                $msg="Não há dados para este cliente";
-                return $msg;
-            }
-            else
-            {
-            return $response->withJson($Cliente);
-            }
-            
+    public function email($request, $response, $args){
+        $mensagem = $request->getParsedBody();             
+        
+        $email_remetente = "resolveu@bananamachinada.com.br"; // deve ser uma conta de email do seu dominio 
+        //Configurações do email, ajustar conforme necessidade
+        $email_reply=$mensagem['email'];
+        //$email_destinatario = "resolveu@bananamachinada.com.br"; // pode ser qualquer email que receberá as mensagens
+        $email_assunto = "Consultou ResolveU"; // Este será o assunto da mensagem
+        $email_conteudo = "Nome = ".$mensagem['nome'] ."\n"; 
+        $email_conteudo .= "Email =".$mensagem['email']."\n";
+        $email_conteudo .= "Telefone =".$mensagem['telefone']."\n"; 
+        $email_conteudo .= "Mensagem =".$mensagem['mensagem']."\n"; 
+        $email_headers = implode ( "\n",array ( "From: $email_remetente", "Reply-To: $email_reply", "Return-Path: $email_remetente","MIME-Version: 1.0","X-Priority: 3","Content-Type: text/html; charset=UTF-8" ) );
+        $id_tipo_servico = $mensagem['id_tipo_servico'];
+        $prestadores = new PrestadorDAO;
+        $emails_destinatarios = $prestadores->buscarPorIdServ($id_tipo_servico);
+       // var_dump($emails_destinatarios);    
+        foreach($emails_destinatarios as $prestador){                
+            //$email=$obj->email_contratante;
+            $email=$prestador->email;
+           if (mail($email, $email_assunto, nl2br($email_conteudo), $email_headers)){ 
+                echo "</b>E-Mail enviado com sucesso!</b>"; 
+                }    
+                else{ 
+                echo "</b>Falha no envio do E-Mail!</b>"; } 
         }
+
     }
+
 }

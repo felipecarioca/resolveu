@@ -5,6 +5,7 @@
 
     include_once('ClienteController.php');
     include_once('PrestadorController.php');
+    include_once('TipoServicoController.php');
     require './vendor/autoload.php';
 
     $app = new \Slim\App;
@@ -36,7 +37,18 @@
        
         $app->post('','ClienteController:logar');
     });
-
+    
+    $app->group('/servico', function() use ($app) {
+        $app->post('','TipoServicoController:email'); 
+        $app->get('/{id}','TipoServicoController:buscarPorId');   
+       
+    });
+    
+    $app->group('/prestadorServ', function() use ($app) {
+          
+        $app->get('/{word}','TipoServicoController:buscarPorIdServ');  
+      
+    });
 
     $app->run();
 
