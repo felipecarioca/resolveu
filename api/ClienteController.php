@@ -25,10 +25,10 @@ class ClienteController {
 
     public function buscarPorId($request, $response, $args) {
         $id = $args['id'];
-        
         $dao= new ClienteDAO;    
         $Cliente = $dao->buscarPorId($id);
-        if(is_bool($Cliente)){ echo"Não há dados para este cliente";}
+        var_dump($Cliente);
+        if(is_bool($Cliente)){ $response->withJson($Cliente);}
         else{
         return $response->withJson($Cliente);}
     }
@@ -62,8 +62,7 @@ class ClienteController {
             $Cliente = $dao->logar($c['email'],$c['senha']);
             if(is_bool($Cliente))
             {
-                $msg="Não há dados para este cliente";
-                return $msg;
+                return $response->withJson(array("retorno"=>"0","msg"=>"Usuaro não existe."));
             }
             else
             {
