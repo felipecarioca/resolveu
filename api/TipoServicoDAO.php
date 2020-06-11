@@ -26,6 +26,26 @@
                 }
             
         }
+        
+        public function buscarPorWordServ($string)
+        {
+            $word= "%".$string."%";
+            
+            $query = "SELECT * FROM tipo_servico WHERE descricao like :word";	
+            $pdo = PDOFactory::getConexao(); 
+            $comando = $pdo->prepare($query);        
+            $comando->bindParam (":word", $word);
+            $comando->execute();
+            $result = $comando->fetch(PDO::FETCH_OBJ);
+            if(is_bool($result)){
+                return false;
+            }   else{
+                $teste = new TipoServico($result->id_tipo_servico,$result->descricao);        
+                                
+                return $teste;
+                }
+            
+        }
         public function buscarPorId($id)
         {
            $query = "SELECT * FROM tipo_servico WHERE id_tipo_servico=:id";		

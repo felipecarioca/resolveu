@@ -41,7 +41,10 @@
     $app->group('/servico', function() use ($app) {
         $app->post('','TipoServicoController:email'); 
         $app->get('/{id}','TipoServicoController:buscarPorId');   
-       
+                   
+    });
+    $app->group('/tiposervico', function() use ($app) {
+        $app->get('/{word}','TipoServicoController:buscarPorWordServ');             
     });
     
     $app->group('/prestadorServ', function() use ($app) {

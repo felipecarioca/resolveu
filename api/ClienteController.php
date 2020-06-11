@@ -62,7 +62,7 @@ class ClienteController {
             $Cliente = $dao->logar($c['email'],$c['senha']);
             if(is_bool($Cliente))
             {
-                return $response->withJson(array("retorno"=>"0","msg"=>"Usuaro não existe."));
+                return $response->withJson(array("retorno"=>"0","msg"=>"Usuario não existe."));
             }
             else
             {
