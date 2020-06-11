@@ -11,7 +11,7 @@ class TipoServicoController {
         
         $dao= new TipoServicoDAO;    
         $serv = $dao->buscarPorId($id);
-        if(is_bool($serv)){ echo"Não há dados para este servico";}
+        if(is_bool($serv)){ return $response->withJson(array("retorno"=>"0","msg"=>"Serviço não existe."));}
         else{
         return $response->withJson($serv);}
     }
@@ -21,7 +21,16 @@ class TipoServicoController {
         
         $dao= new TipoServicoDAO;    
         $serv = $dao->buscarPorIdServ($id);
-        if(is_bool($serv)){ echo"Não há dados para este servico";}
+        if(is_bool($serv)){ return $response->withJson(array("retorno"=>"0","msg"=>"Serviço não existe."));}
+        else{
+        return $response->withJson($serv);}
+    }
+    public function buscarPorWordServ($request, $response, $args){
+        $word = $args['word'];
+        
+        $dao= new TipoServicoDAO;    
+        $serv = $dao->buscarPorWordServ($word);
+        if(is_bool($serv)){ return $response->withJson(array("retorno"=>"0","msg"=>"Serviço não existe."));;}
         else{
         return $response->withJson($serv);}
     }
