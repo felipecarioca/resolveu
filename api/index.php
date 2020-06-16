@@ -8,8 +8,15 @@
     include_once('TipoServicoController.php');
     require './vendor/autoload.php';
 
-    $app = new \Slim\App;
-    	
+
+   $app = new \Slim\App([
+    'settings' => [
+        'displayErrorDetails' => true
+    ]
+]);    	
+
+
+
     $app->group('/clientes', function() use ($app) {
 
         $app->get('','ClienteController:listar');

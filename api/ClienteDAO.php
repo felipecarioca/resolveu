@@ -47,10 +47,11 @@
         }
         public function listar()
         {
-		    $query = 'SELECT * FROM Cliente';
-    		$pdo = PDOFactory::getConexao();
-	    	$comando = $pdo->prepare($query);
-    		$comando->execute();
+
+	    $query = 'SELECT * FROM Cliente';
+    	    $pdo = PDOFactory::getConexao();
+	    $comando = $pdo->prepare($query);
+    	    $comando->execute();
             $Clientes=array();	
             while($result = $comando->fetch(PDO::FETCH_OBJ)){
 			    $Clientes[] = new Cliente($result->id_cliente,$result->nome,$result->cpf,$result->email, $result->senha, $result->cep,$result->fone); 
