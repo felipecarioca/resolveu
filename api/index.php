@@ -6,6 +6,7 @@
     include_once('ClienteController.php');
     include_once('PrestadorController.php');
     include_once('TipoServicoController.php');
+    include_once('OrcamentoController.php');
     require './vendor/autoload.php';
 
     $app = new \Slim\App;
@@ -52,7 +53,17 @@
         $app->get('/{word}','TipoServicoController:buscarPorIdServ');  
       
     });
-
+   
+    $app->group('/solicitacaoAceita', function() use ($app) {
+          
+        $app->get('/{id}','OrcamentoController:Aceita');  
+      
+    });     
+    $app->group('/solicitacaoRecusada', function() use ($app) {
+          
+        $app->get('/{id_solicitacao}','OrcamentoController:Recusada');  
+      
+    });   
     $app->run();
 
 ?>
