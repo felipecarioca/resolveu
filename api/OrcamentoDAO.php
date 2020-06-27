@@ -3,7 +3,7 @@
     include_once 'Solicitacao.php';
 	include_once 'PDOFactory.php';
 
-    class MensagemDAO
+    class OrcamentoDAO
     {
 
         public function inserir(Orcamento $orcamento)
@@ -22,17 +22,20 @@
             
             return $id;
         }
+
         public function buscarOrcamento($orcamento)
         {
  		    $query = 'SELECT id_orcamento FROM orcamento WHERE descricao=:descricao';
+            
             $pdo = PDOFactory::getConexao(); 
-		    $comando = $pdo->prepare($query);
+		    
+            $comando = $pdo->prepare($query);
             $comando->bindParam (':descricao', $orcamento);
           
             $comando->execute();
            
 		    $result = $comando->fetch(PDO::FETCH_OBJ);
-          
+            
 		    return new Orcamento($result->id,$result->descricao);           
         }
            

@@ -7,14 +7,25 @@ include_once('TipoServicoDAO.php');
 class TipoServicoController {
     
     public function buscarPorId($request, $response, $args) {
+        
         $id = $args['id'];
         
-        $dao= new TipoServicoDAO;    
+        $dao = new TipoServicoDAO();    
+        
         $serv = $dao->buscarPorId($id);
-        if(is_bool($serv)){ return $response->withJson(array("retorno"=>"0","msg"=>"Serviço não existe."));}
-        else{
-        return $response->withJson($serv);}
+        
+        if(is_bool($serv)) {
+            
+            return $response->withJson(array("retorno"=>"0","msg"=>"Serviço não existe."));
+        
+        } else {
+            
+            return $response->withJson($serv);
+        
+        }
     }
+
+    /*
     //busca prestador por servico
     public function buscarPorIdServ($request, $response, $args) {
         $id = $args['word'];
@@ -24,17 +35,27 @@ class TipoServicoController {
         if(is_bool($serv)){ return $response->withJson(array("retorno"=>"0","msg"=>"Serviço não existe."));}
         else{
         return $response->withJson($serv);}
+
     }
-    public function buscarPorWordServ($request, $response, $args){
-        $word = $args['word'];
+    */
+
+    public function buscarPorDescricao($request, $response, $args){
         
-        $dao= new TipoServicoDAO;    
-        $serv = $dao->buscarPorWordServ($word);
-        if(is_bool($serv)){ return $response->withJson(array("retorno"=>"0","msg"=>"Serviço não existe."));;}
-        else{
-        return $response->withJson($serv);}
+        $descricao = $args['descricao'];
+        
+        $dao = new TipoServicoDAO;    
+        
+        $serv = $dao->buscarPorDescricao($descricao);
+
+        if(is_bool($serv)) 
+            return $response->withJson(array("retorno"=>"0","msg"=>"Serviço não existe."));
+        else
+            return $response->withJson($serv);
+        
     }
+
     public function email($request, $response, $args){
+
         $mensagem = $request->getParsedBody();             
         $id_cliente = $mensagem['id_cliente'];
         $email_remetente = "resolveu@bananamachinada.com.br"; 
