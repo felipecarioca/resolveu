@@ -38,6 +38,21 @@
             
 		    return new Orcamento($result->id,$result->descricao);           
         }
+
+        public function buscarPorId($id) {
+
+            $query = 'SELECT * FROM orcamento WHERE id_orcamento=:id';
+
+           $pdo = PDOFactory::getConexao(); 
+
+           $comando = $pdo->prepare($query);
+           $comando->bindParam (':id', $id);
+         
+           $comando->execute();
+          
+           $result = $comando->fetch(PDO::FETCH_OBJ);
+           return new Orcamento($result->id, $result->descricao);           
+       }
            
         
     }

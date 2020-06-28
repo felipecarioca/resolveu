@@ -51,5 +51,21 @@
 		    return new Prestador($result->id,$result->descricao);           
 
         }
+        public function buscarPorId($id) {
+
+            $query = 'SELECT * FROM solicitacao WHERE id_solicitacao=:id';
+
+           $pdo = PDOFactory::getConexao(); 
+
+           $comando = $pdo->prepare($query);
+           $comando->bindParam (':id', $id);
+         
+           $comando->execute();
+          
+           $result = $comando->fetch(PDO::FETCH_OBJ);
+           return new Solicitacao($result->id_solicitacao, $result->id_cliente,$result->id_orcamento,$result->id_prestador, $result->id_tipo_servico,$result->$id_status_servico);           
+       }
+
+        
     }
 ?>
