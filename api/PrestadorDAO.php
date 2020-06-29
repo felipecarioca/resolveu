@@ -28,56 +28,63 @@
         public function deletar($id)
         {
             $qDeletar = "DELETE from prestador WHERE id_prestador=:id";            
-            $Prestador = $this->buscarPorId($id);
+            
+            $prestador = $this->buscarPorId($id);
             $pdo = PDOFactory::getConexao();
             $comando = $pdo->prepare($qDeletar);
             $comando->bindParam(":id",$id);
             $comando->execute();
 
-            return $Prestador;
+            return $prestador;
         }
 
-        public function atualizar(Prestador $Prestador)
+        public function atualizar(Prestador $prestador)
         {
             
-            $qAtualizar = "UPDATE prestador SET nome=:nome, cpf=:cpf, email=:email, cep=:cep, fone=:fone, senha=:senha, id_tipo_servico=:id_tipo_servico WHERE id_prestador=:id";            
+            $query = "UPDATE prestador SET nome=:nome, cpf=:cpf, email=:email, cep=:cep, fone=:fone, senha=:senha, id_tipo_servico=:id_tipo_servico WHERE id_prestador=:id";            
                                   
             $pdo = PDOFactory::getConexao();
-            var_dump($Prestador);
-            $comando = $pdo->prepare($qAtualizar);
-            $comando->bindParam(":nome",$Prestador->nome);
-            $comando->bindParam(":cpf",$Prestador->cpf);
-            $comando->bindParam(":email",$Prestador->email);
-            $comando->bindParam(":cep",$Prestador->cep);
-            $comando->bindParam(":fone",$Prestador->fone);
-            $comando->bindParam(":senha",$Prestador->senha);
-            $comando->bindParam(":id_tipo_servico",$Prestador->id_tipo_servico);
-            $comando->bindParam(":id",$Prestador->id);
+            
+            $comando = $pdo->prepare($query);
+
+            $comando->bindParam(":nome",$prestador->nome);
+            $comando->bindParam(":cpf",$prestador->cpf);
+            $comando->bindParam(":email",$prestador->email);
+            $comando->bindParam(":cep",$prestador->cep);
+            $comando->bindParam(":fone",$prestador->fone);
+            $comando->bindParam(":senha",$prestador->senha);
+            $comando->bindParam(":id_tipo_servico",$prestador->id_tipo_servico);
+            $comando->bindParam(":id",$prestador->id);
+
             $comando->execute();
          
-            return $Prestador;        
+            return $prestador;        
         }
 
-        public function listar()
-        {
+        public function listar() {
+
 		    $query = 'SELECT * FROM prestador';
 
     		$pdo = PDOFactory::getConexao();
+
 	    	$comando = $pdo->prepare($query);
     		$comando->execute();
-            $Prestadores=array();
+
+            $prestadores=array();
 
 		    while($row = $comando->fetch(PDO::FETCH_OBJ)){
-			    $Prestadores[] = new Prestador($row->id_prestador,$row->nome,$row->cpf, $row->email, $row->cep, $row->fone, $row->senha, $row->id_tipo_servico);
+			    $prestadores[] = new Prestador($row->id_prestador,$row->nome,$row->cpf, $row->email, $row->cep, $row->fone, $row->senha, $row->id_tipo_servico);
             }
 
-            return $Prestadores;
+            return $prestadores;
         }
 
-        public function buscarPorId($id)
-        {
+        public function buscarPorId($id) {
+
  		    $query = 'SELECT * FROM prestador WHERE id_prestador=:id';
+
             $pdo = PDOFactory::getConexao(); 
+
 		    $comando = $pdo->prepare($query);
             $comando->bindParam (':id', $id);
           
@@ -87,19 +94,24 @@
           
 		    return new Prestador($result->id_prestador,$result->nome,$result->cpf,$result->email, $result->cep,$result->fone, $result->senha, $result->id_tipo_servico);           
         }
-        public function buscarPorIdServ($id)
-        {
- 		    $query = 'SELECT * FROM Prestador WHERE id_tipo_servico=:id LIMIT 3';		
+
+        public function buscarPorIdServ($id) {
+
+ 		    $query = 'SELECT * FROM prestador WHERE id_tipo_servico=:id LIMIT 5';
+            
             $pdo = PDOFactory::getConexao(); 
-		    $comando = $pdo->prepare($query);
+		    
+            $comando = $pdo->prepare($query);
 		    $comando->bindParam (':id', $id);
 		    $comando->execute();
-           
-            $Prestadores=array();	
-		    while($row = $comando->fetch(PDO::FETCH_OBJ)){
-			    $Prestadores[] = new Prestador($row->id_prestador,$row->nome,$row->cpf, $row->email, $row->senha,$row->cep, $row->fone,$row->id_tipo_servico);
+            
+            $prestadores = array();	
+		    
+            while($row = $comando->fetch(PDO::FETCH_OBJ)){
+			    $prestadores[] = new Prestador($row->id_prestador,$row->nome,$row->cpf, $row->email, $row->senha,$row->cep, $row->fone,$row->id_tipo_servico);
             }
-            return $Prestadores;
+
+            return $prestadores;
 		    
         }
        

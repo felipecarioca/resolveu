@@ -1,4 +1,5 @@
 <?php
+
     class TipoServico {
         
         public $id;
@@ -9,4 +10,5 @@
             $this->descricao = $descricao;
         }
     }
+    
 ?>

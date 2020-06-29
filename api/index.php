@@ -1,15 +1,23 @@
 <?php
-
+    
     use \Psr\Http\Message\ServerRequestInterface as Request;
     use \Psr\Http\Message\ResponseInterface as Response;
 
     include_once('ClienteController.php');
     include_once('PrestadorController.php');
     include_once('TipoServicoController.php');
+    //include_once('OrcamentoController.php');
+
     require './vendor/autoload.php';
 
-    $app = new \Slim\App;
-    	
+    $app = new \Slim\App([
+        'settings' => [
+            'displayErrorDetails' => true
+        ]
+    ]);    	
+
+
+    // Clientes
     $app->group('/clientes', function() use ($app) {
 
         $app->get('','ClienteController:listar');
@@ -22,6 +30,7 @@
 
     });
 
+    // Prestadores
     $app->group('/prestadores', function() use ($app) {
         
         $app->get('','PrestadorController:listar');
@@ -33,18 +42,22 @@
 
     });
 
+    // Cliente Login
     $app->group('/clientelogin', function() use ($app) {
        
         $app->post('','ClienteController:logar');
     });
     
+    // Serviço
     $app->group('/servico', function() use ($app) {
-        $app->post('','TipoServicoController:email'); 
-        $app->get('/{id}','TipoServicoController:buscarPorId');   
-                   
+        
+        $app->post('','TipoServicoController:email');
+        $app->get('/{id}','TipoServicoController:buscarPorId');
+
     });
-    $app->group('/tiposervico', function() use ($app) {
-        $app->get('/{word}','TipoServicoController:buscarPorWordServ');             
+
+    $app->group('/tipo-servico', function() use ($app) {
+        $app->get('/{descricao}','TipoServicoController:buscarPorDescricao');             
     });
     
     $app->group('/prestadorServ', function() use ($app) {
@@ -52,7 +65,17 @@
         $app->get('/{word}','TipoServicoController:buscarPorIdServ');  
       
     });
-
+    
+    $app->group('/solicitacaoAceita', function() use ($app) {
+          
+        $app->get('/{id}','OrcamentoController:Aceita');  
+      
+    });     
+    $app->group('/solicitacaoRecusada', function() use ($app) {
+          
+        $app->get('/{id_solicitacao}','OrcamentoController:Recusada');  
+      
+    });   
     $app->run();
 
 ?>
