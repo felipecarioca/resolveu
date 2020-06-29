@@ -95,7 +95,7 @@
 		    return new Prestador($result->id_prestador,$result->nome,$result->cpf,$result->email, $result->cep,$result->fone, $result->senha, $result->id_tipo_servico);           
         }
 
-        public function buscarPorIdServ($id) {
+        public function buscarPorServico($id) {
 
  		    $query = 'SELECT * FROM prestador WHERE id_tipo_servico=:id LIMIT 5';
             

@@ -25,20 +25,6 @@ class TipoServicoController {
         }
     }
 
-    /*
-    //busca prestador por servico
-    public function buscarPorIdServ($request, $response, $args) {
-        $id = $args['word'];
-        
-        $dao= new TipoServicoDAO;    
-        $serv = $dao->buscarPorIdServ($id);
-        if(is_bool($serv)){ return $response->withJson(array("retorno"=>"0","msg"=>"Serviço não existe."));}
-        else{
-        return $response->withJson($serv);}
-
-    }
-    */
-
     public function buscarPorDescricao($request, $response, $args){
         
         $descricao = $args['descricao'];

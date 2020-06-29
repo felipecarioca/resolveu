@@ -25,9 +25,11 @@
         public function buscarPorDescricao($descricao)
         {
             
-            $query = "SELECT * FROM tipo_servico WHERE descricao LIKE '%:descricao%'";	
+            $descricao = "%$descricao%";
 
-            $pdo = PDOFactory::getConexao(); 
+            $query = "SELECT * FROM tipo_servico WHERE descricao LIKE :descricao";	
+
+            $pdo = PDOFactory::getConexao();
 
             $comando = $pdo->prepare($query);        
             $comando->bindParam (":descricao", $descricao);
