@@ -9,8 +9,10 @@
         public $cep;
         public $fone;
         public $id_tipo_servico;
+        public $endereco;
+        public $empresa;
                 
-        function __construct($id, $nome, $cpf, $email,$cep,$fone,$senha,$id_tipo_servico){
+        function __construct($id, $nome, $cpf, $email,$cep,$fone,$senha,$id_tipo_servico,$endereco,$empresa){
             
             $this->id = $id;
             $this->nome = $nome;
@@ -20,6 +22,8 @@
             $this->cep = $cep;
             $this->fone = $fone;
             $this->id_tipo_servico = $id_tipo_servico;
+            $this->endereco = $endereco;
+            $this->empresa = $empresa;
            
         }
     }

@@ -6,7 +6,7 @@
     {
         public function inserir(Prestador $Prestador)
         {
-            $qInserir = "INSERT INTO prestador(nome, cpf, email, cep, fone, senha, id_tipo_servico) VALUES (:nome,:cpf,:email,:cep,:fone,:senha,:id_tipo_servico)";            
+            $qInserir = "INSERT INTO prestador(nome, cpf, email, cep, fone, senha, id_tipo_servico,endereco,empresa) VALUES (:nome,:cpf,:email,:cep,:fone,:senha,:id_tipo_servico,:endereco,:empresa)";            
             
             $pdo = PDOFactory::getConexao();
             
@@ -18,6 +18,8 @@
             $comando->bindParam(":fone",$Prestador->fone);
             $comando->bindParam(":senha",$Prestador->senha);
             $comando->bindParam(":id_tipo_servico",$Prestador->id_tipo_servico);
+            $comando->bindParam(":endereco",$Prestador->endereco);
+            $comando->bindParam(":empresa",$Prestador->empresa);
             $comando->execute();
             
             $Prestador->id = $pdo->lastInsertId();
@@ -41,7 +43,7 @@
         public function atualizar(Prestador $prestador)
         {
             
-            $query = "UPDATE prestador SET nome=:nome, cpf=:cpf, email=:email, cep=:cep, fone=:fone, senha=:senha, id_tipo_servico=:id_tipo_servico WHERE id_prestador=:id";            
+            $query = "UPDATE prestador SET nome=:nome, cpf=:cpf, email=:email, cep=:cep, fone=:fone, senha=:senha, id_tipo_servico=:id_tipo_servico, endereco=:endereco, empresa=:empresa WHERE id_prestador=:id";            
                                   
             $pdo = PDOFactory::getConexao();
             
@@ -54,10 +56,12 @@
             $comando->bindParam(":fone",$prestador->fone);
             $comando->bindParam(":senha",$prestador->senha);
             $comando->bindParam(":id_tipo_servico",$prestador->id_tipo_servico);
+            $comando->bindParam(":endereco",$prestador->endereco);
+            $comando->bindParam(":empresa",$prestador->empresa);
             $comando->bindParam(":id",$prestador->id);
 
             $comando->execute();
-         
+            
             return $prestador;        
         }
 
@@ -73,7 +77,7 @@
             $prestadores=array();
 
 		    while($row = $comando->fetch(PDO::FETCH_OBJ)){
-			    $prestadores[] = new Prestador($row->id_prestador,$row->nome,$row->cpf, $row->email, $row->cep, $row->fone, $row->senha, $row->id_tipo_servico);
+			    $prestadores[] = new Prestador($row->id_prestador,$row->nome,$row->cpf, $row->email, $row->cep, $row->fone, $row->senha, $row->id_tipo_servico, $row->endereco, $row->empresa);
             }
 
             return $prestadores;
@@ -92,7 +96,7 @@
            
 		    $result = $comando->fetch(PDO::FETCH_OBJ);
           
-		    return new Prestador($result->id_prestador,$result->nome,$result->cpf,$result->email, $result->cep,$result->fone, $result->senha, $result->id_tipo_servico);           
+		    return new Prestador($result->id_prestador,$result->nome,$result->cpf,$result->email, $result->cep,$result->fone, $result->senha, $result->id_tipo_servico, $result->endereco, $result->empresa);           
         }
 
         public function buscarPorServico($id) {
@@ -108,7 +112,7 @@
             $prestadores = array();	
 		    
             while($row = $comando->fetch(PDO::FETCH_OBJ)){
-			    $prestadores[] = new Prestador($row->id_prestador,$row->nome,$row->cpf, $row->email, $row->senha,$row->cep, $row->fone,$row->id_tipo_servico);
+			    $prestadores[] = new Prestador($row->id_prestador,$row->nome,$row->cpf, $row->email, $row->senha,$row->cep, $row->fone,$row->id_tipo_servico, $row->endereco, $row->empresa);
             }
 
             return $prestadores;

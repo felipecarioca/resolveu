@@ -28,7 +28,7 @@
             $descricao = "%$descricao%";
 
             $query = "SELECT * FROM tipo_servico WHERE descricao LIKE :descricao";	
-
+            
             $pdo = PDOFactory::getConexao();
 
             $comando = $pdo->prepare($query);        

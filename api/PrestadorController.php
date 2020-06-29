@@ -7,6 +7,7 @@ include_once('PrestadorDAO.php');
 class PrestadorController {
 
     public function listar($request, $response, $args) {
+        
         $dao= new PrestadorDAO;    
         $prestadores =  $dao->listar();
                 
@@ -14,6 +15,7 @@ class PrestadorController {
     }
     
     public function buscarPorId($request, $response, $args) {
+        
         $id = $args['id'];
         
         $dao= new PrestadorDAO;    
@@ -23,6 +25,7 @@ class PrestadorController {
     }
 
     public function buscarPorServico($request, $response, $args) {
+        
         $id = $args['id'];
         
         $dao= new PrestadorDAO;    
@@ -32,27 +35,39 @@ class PrestadorController {
     }
 
     public function inserir( $request, $response, $args) {
+        
         $prestador = $request->getParsedBody();
-        $prestador = new Prestador(0,$prestador['nome'],$prestador['cpf'],$prestador['email'], $prestador['cep'],$prestador['fone'],$prestador['senha'],$prestador['id_tipo_servico']);
+        $prestador = new Prestador(0,$prestador['nome'],$prestador['cpf'],$prestador['email'], $prestador['cep'],$prestador['fone'],$prestador['senha'],$prestador['id_tipo_servico'], $prestador['endereco'], $prestador['empresa']);
+        
         $dao = new PrestadorDAO;
+        
         $prestador = $dao->inserir($prestador);
+        
         return $response->withJson($prestador,201);    
     }
     
     public function atualizar($request, $response, $args) {
+        
         $id = $args['id'];
+        
         $prestador = $request->getParsedBody();
-        $prestador = new Prestador($id, $prestador['nome'],$prestador['cpf'],$prestador['email'], $prestador['cep'],$prestador['fone'],$prestador['senha'],$prestador['id_tipo_servico']);
+        $prestador = new Prestador($id, $prestador['nome'],$prestador['cpf'],$prestador['email'], $prestador['cep'],$prestador['fone'],$prestador['senha'],$prestador['id_tipo_servico'], $prestador['endereco'], $prestador['empresa']);
+        
         $dao = new PrestadorDAO;
+        
         $prestador = $dao->atualizar($prestador);
     
         return $response->withJson($prestador);    
     }
 
     public function deletar($request, $response, $args) {
+        
         $id = $args['id'];
+        
         $dao = new PrestadorDAO;
+        
         $prestador = $dao->deletar($id);
+        
         return $response->withJson($prestador);  
     }
 
