@@ -373,7 +373,7 @@ ul.social li{
           <td valign="middle" class="hero bg_white" style="padding: 2em 0 4em 0;background-color:white;">
             <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
 	
-		'. $template_prestador . '
+		'. $template_cliente . '
 
 			    </tr>
             </table>
