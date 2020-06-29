@@ -1,7 +1,8 @@
  <?php 
+
     include_once 'Orcamento.php';
     include_once 'Solicitacao.php';
-	include_once 'PDOFactory.php';
+    include_once 'PDOFactory.php';
 
     class OrcamentoDAO
     {
@@ -25,18 +26,18 @@
 
         public function buscarOrcamento($orcamento)
         {
- 		    $query = 'SELECT id_orcamento FROM orcamento WHERE descricao=:descricao';
+            $query = 'SELECT id_orcamento FROM orcamento WHERE descricao=:descricao';
             
             $pdo = PDOFactory::getConexao(); 
-		    
+            
             $comando = $pdo->prepare($query);
             $comando->bindParam (':descricao', $orcamento);
           
             $comando->execute();
            
-		    $result = $comando->fetch(PDO::FETCH_OBJ);
+            $result = $comando->fetch(PDO::FETCH_OBJ);
             
-		    return new Orcamento($result->id,$result->descricao);           
+            return new Orcamento($result->id,$result->descricao);           
         }
 
         public function buscarPorId($id) {
@@ -56,4 +57,5 @@
            
         
     }
+    
 ?>
