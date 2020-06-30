@@ -52,7 +52,7 @@
 
     });
 
-    // ---- Cliente Login ----
+    // ---- Orçamento ----
     $app->group('/orcamento', function() use ($app) {
         
         include_once('OrcamentoController.php');
@@ -61,9 +61,14 @@
 
     });
 
+    // ---- Solicitação ----
+    $app->group('/solicitacao', function() use ($app) {
+        
+        include_once('SolicitacaoController.php');
 
+        $app->get('/{id}','SolicitacaoController:buscarPorId');
 
-
+    });
 
     // Prestadores
     $app->group('/prestador', function() use ($app) {

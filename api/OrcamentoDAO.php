@@ -61,7 +61,7 @@
           
            $result = $comando->fetch(PDO::FETCH_OBJ);
 
-           return new Orcamento($result->id, $result->descricao, $result->id_cliente, $result->cep, $result->id_tipo_servico);
+           return new Orcamento($result->id_orcamento, $result->descricao, $result->id_cliente, $result->cep, $result->id_tipo_servico);
            
        }
            

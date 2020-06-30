@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 30-Jun-2020 às 01:48
+-- Generation Time: 30-Jun-2020 às 18:47
 -- Versão do servidor: 10.1.39-MariaDB
 -- versão do PHP: 7.3.5
 
@@ -35,7 +35,7 @@ CREATE TABLE `cliente` (
   `email` varchar(64) DEFAULT NULL,
   `cep` varchar(12) NOT NULL,
   `fone` varchar(16) DEFAULT NULL,
-  `senha` varchar(256) NOT NULL
+  `senha` varchar(16) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -54,9 +54,26 @@ INSERT INTO `cliente` (`id_cliente`, `nome`, `cpf`, `email`, `cep`, `fone`, `sen
 
 CREATE TABLE `orcamento` (
   `id_orcamento` int(12) NOT NULL,
-  `descricao_cliente` text,
-  `retorno_prestador` text
+  `descricao` text,
+  `id_cliente` int(11) NOT NULL,
+  `cep` varchar(12) NOT NULL,
+  `id_tipo_servico` int(12) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `orcamento`
+--
+
+INSERT INTO `orcamento` (`id_orcamento`, `descricao`, `id_cliente`, `cep`, `id_tipo_servico`) VALUES
+(1, 'Olá! Quero fazer um orçamento', 2, '90620110', 1),
+(2, 'Olá! Quero fazer um orçamento', 2, '90620110', 1),
+(3, 'Olá! Quero fazer um orçamento!!! Meu tenis estragou', 2, '90620110', 1),
+(4, 'Olá! Quero fazer um orçamento!!! Meu tenis estragou', 2, '90620110', 1),
+(5, 'Olá! Quero fazer um orçamento!!! Meu tenis estragou', 2, '90620110', 1),
+(6, 'Olá! Quero fazer um orçamento!!! Meu tenis estragou', 2, '90620110', 1),
+(7, 'Olá! Quero fazer um orçamento!!! Meu tenis estragou', 2, '90620110', 1),
+(8, 'Olá! Quero fazer um orçamento!!! Meu tenis estragou', 2, '90620110', 1),
+(9, 'Olá! Quero fazer um orçamento!!! Meu tenis estragou', 2, '90620110', 1);
 
 -- --------------------------------------------------------
 
@@ -85,7 +102,8 @@ INSERT INTO `prestador` (`id_prestador`, `nome`, `cpf`, `email`, `cep`, `fone`, 
 (1, 'Jorge', '03377821058', 'jorge@gmail.com', '90620-110', '(51) 99620-3669', '1234', 1, 'Avenida Bento Gonçalves, 1800, Porto Alegre - Rio Grande do Sul', 'Sapateria do Jorge'),
 (2, 'Ricardo', '03377821058', 'ricardo@gmail.com', '90620-110', '(51) 99620-3669', '1234', 1, NULL, NULL),
 (3, 'Luiz', '03377821058', 'luiz@gmail.com', '90620-110', '(51) 99620-3669', '1234', 1, NULL, NULL),
-(4, 'José', '03377821058', 'jose@gmail.com', '90620-110', '(51) 99620-3669', '1234', 2, NULL, NULL);
+(4, 'José', '03377821058', 'jose@gmail.com', '90620-110', '(51) 99620-3669', '1234', 2, NULL, NULL),
+(5, 'Fulano da Silva', '0000000000', 'email@agm.com', '90620110', '2312312312', '132431231513125v', 1, 'Avenida ATl 1111', 'Sapataria do Fulano');
 
 -- --------------------------------------------------------
 
@@ -100,6 +118,28 @@ CREATE TABLE `servico` (
   `id_tipo_servico` int(12) NOT NULL,
   `id_status_servico` int(12) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `solicitacao`
+--
+
+CREATE TABLE `solicitacao` (
+  `id_solicitacao` int(12) NOT NULL,
+  `id_orcamento` int(12) NOT NULL,
+  `id_prestador` int(12) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `solicitacao`
+--
+
+INSERT INTO `solicitacao` (`id_solicitacao`, `id_orcamento`, `id_prestador`) VALUES
+(1, 9, 1),
+(2, 9, 2),
+(3, 9, 3),
+(4, 9, 5);
 
 -- --------------------------------------------------------
 
@@ -145,7 +185,8 @@ ALTER TABLE `cliente`
 -- Indexes for table `orcamento`
 --
 ALTER TABLE `orcamento`
-  ADD PRIMARY KEY (`id_orcamento`);
+  ADD PRIMARY KEY (`id_orcamento`),
+  ADD KEY `orcamento_ibfk_1` (`id_cliente`);
 
 --
 -- Indexes for table `prestador`
@@ -163,6 +204,14 @@ ALTER TABLE `servico`
   ADD KEY `id_prestador` (`id_prestador`),
   ADD KEY `id_tipo_servico` (`id_tipo_servico`),
   ADD KEY `id_status_servico` (`id_status_servico`);
+
+--
+-- Indexes for table `solicitacao`
+--
+ALTER TABLE `solicitacao`
+  ADD PRIMARY KEY (`id_solicitacao`),
+  ADD KEY `solicitacao_ibfk_1` (`id_orcamento`),
+  ADD KEY `solicitacao_ibfk_2` (`id_prestador`);
 
 --
 -- Indexes for table `status_servico`
@@ -190,19 +239,25 @@ ALTER TABLE `cliente`
 -- AUTO_INCREMENT for table `orcamento`
 --
 ALTER TABLE `orcamento`
-  MODIFY `id_orcamento` int(12) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_orcamento` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `prestador`
 --
 ALTER TABLE `prestador`
-  MODIFY `id_prestador` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_prestador` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `servico`
 --
 ALTER TABLE `servico`
   MODIFY `id_servico` int(12) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `solicitacao`
+--
+ALTER TABLE `solicitacao`
+  MODIFY `id_solicitacao` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `status_servico`
@@ -221,6 +276,12 @@ ALTER TABLE `tipo_servico`
 --
 
 --
+-- Limitadores para a tabela `orcamento`
+--
+ALTER TABLE `orcamento`
+  ADD CONSTRAINT `orcamento_ibfk_1` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id_cliente`);
+
+--
 -- Limitadores para a tabela `prestador`
 --
 ALTER TABLE `prestador`
@@ -234,6 +295,13 @@ ALTER TABLE `servico`
   ADD CONSTRAINT `servico_ibfk_2` FOREIGN KEY (`id_prestador`) REFERENCES `prestador` (`id_prestador`),
   ADD CONSTRAINT `servico_ibfk_3` FOREIGN KEY (`id_tipo_servico`) REFERENCES `tipo_servico` (`id_tipo_servico`),
   ADD CONSTRAINT `servico_ibfk_4` FOREIGN KEY (`id_status_servico`) REFERENCES `status_servico` (`id_status_servico`);
+
+--
+-- Limitadores para a tabela `solicitacao`
+--
+ALTER TABLE `solicitacao`
+  ADD CONSTRAINT `solicitacao_ibfk_1` FOREIGN KEY (`id_orcamento`) REFERENCES `orcamento` (`id_orcamento`),
+  ADD CONSTRAINT `solicitacao_ibfk_2` FOREIGN KEY (`id_prestador`) REFERENCES `prestador` (`id_prestador`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

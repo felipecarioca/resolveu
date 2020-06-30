@@ -1,23 +1,25 @@
 <?php 
     include_once 'Orcamento.php';
+    include_once 'OrcamentoDao.php';
+
     include_once 'Solicitacao.php';
 	include_once 'PDOFactory.php';
 
     class SolicitacaoDAO
     {   
 
-        public function Inserir(Solicitacao $solicitacao)
+        public function inserir(Solicitacao $solicitacao)
         {
-            $qInserir = "INSERT INTO solicitacao(id_cliente,id_prestador,id_tipo_servico,id_status_servico,id_orcamento) VALUES (:id_cliente,:id_prestador,:id_tipo_servico,:id_status_servico,:id_orcamento)";            
+
+            //print_r($solicitacao); die;
+
+            $qInserir = "INSERT INTO solicitacao(id_orcamento, id_prestador) VALUES (:id_orcamento, :id_prestador)";            
             
             $pdo = PDOFactory::getConexao();
             
             $comando = $pdo->prepare($qInserir);
-            $comando->bindParam(":id_cliente",$solicitacao->id_cliente);
-            $comando->bindParam(":id_prestador",$solicitacao->id_prestador);
-            $comando->bindParam(":id_tipo_servico",$solicitacao->id_tipo_servico);
-            $comando->bindParam(":id_status_servico",$solicitacao->id_status_servico);
-            $comando->bindParam(":id_orcamento",$solicitacao->id_orcamento);
+            $comando->bindParam(":id_orcamento", $solicitacao->orcamento->id);
+            $comando->bindParam(":id_prestador", $solicitacao->id_prestador);
                                              
             $comando->execute();
             
@@ -26,6 +28,10 @@
             return $id;
 
         }
+
+        /*
+
+        @ Comentado por Felipe Pereira - Não haverá mais utilidade pois não trabalharemos mais com status
 
         public function Update(Soicitacao $retorno)
         {
@@ -53,6 +59,8 @@
 
         }
         
+        */
+
         public function buscarPorId($id) {
 
             $query = 'SELECT * FROM solicitacao WHERE id_solicitacao=:id';
@@ -65,7 +73,11 @@
            $comando->execute();
           
            $result = $comando->fetch(PDO::FETCH_OBJ);
-           return new Solicitacao($result->id_solicitacao, $result->id_cliente,$result->id_orcamento,$result->id_prestador, $result->id_tipo_servico,$result->$id_status_servico);           
+
+           $orcamentoDao = new OrcamentoDao;
+           $orcamento = $orcamentoDao->buscarPorId($result->id_orcamento);
+
+           return new Solicitacao($result->id_solicitacao, $orcamento, $result->id_prestador);           
        }
 
         

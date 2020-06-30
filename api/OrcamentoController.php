@@ -31,17 +31,27 @@ class OrcamentoController {
 
         $orcamento = new Orcamento(0, $parametros['descricao'], $parametros['id_cliente'], $parametros['cep'], $parametros['id_tipo_servico']);
 
-        $orcamentoDao->inserir($orcamento);
+        $id_orcamento = $orcamentoDao->inserir($orcamento);
+
+        $orcamento = $orcamentoDao->buscarPorId($id_orcamento);
 
         // Busca os Prestadores
         $prestadorDao = new PrestadorDAO;
 
         $prestadores = $prestadorDao->buscarPorServico($parametros['id_tipo_servico']);
 
+        //print_r($prestadores);
         // Cria as Solicitações
+
+        $solicitacaoDao = new SolicitacaoDao;
+
         foreach ($prestadores as $key => $prestador) {
             
-            
+            $solicitacao = new Solicitacao(0, $orcamento, $prestador->id);
+
+            $solicitacaoDao->inserir($solicitacao);
+
+            // ENVIAR E-MAIL AQUI
 
         }
 
