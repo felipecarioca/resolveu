@@ -27,7 +27,7 @@ class ClienteController {
         $id = $args['id'];
         $dao= new ClienteDAO;    
         $Cliente = $dao->buscarPorId($id);
-        var_dump($Cliente);
+        //var_dump($Cliente);
         if(is_bool($Cliente)){ $response->withJson($Cliente);}
         else{
         return $response->withJson($Cliente);}
