@@ -2,12 +2,52 @@
 
 include_once('Orcamento.php');
 include_once('OrcamentoDAO.php');
+
+include_once('Solicitacao.php');
 include_once('SolicitacaoDAO.php');
-include_once('ClienteDAO.php');
+
+include_once('Prestador.php');
+include_once('PrestadorDAO.php');
 
 class OrcamentoController {
 
-     public function Aceita($request, $response, $args) {
+    public function inserir($request, $response, $args)
+    {
+        $var = $request->getParsedBody();
+        $orcamento = new Orcamento(0, $var['descricao'], $var['id_cliente'], $var['cep'], $var['id_tipo_servico']);
+    
+        $dao = new OrcamentoDAO;    
+        $orcamento = $dao->inserir($orcamento);
+
+        return $response->withJson($orcamento, 201);
+    }
+
+    public function orcar($request, $response, $args) {
+
+        $parametros = $request->getParsedBody();
+
+        // Cria o Orçamento
+        $orcamentoDao = new OrcamentoDAO;
+
+        $orcamento = new Orcamento(0, $parametros['descricao'], $parametros['id_cliente'], $parametros['cep'], $parametros['id_tipo_servico']);
+
+        $orcamentoDao->inserir($orcamento);
+
+        // Busca os Prestadores
+        $prestadorDao = new PrestadorDAO;
+
+        $prestadores = $prestadorDao->buscarPorServico($parametros['id_tipo_servico']);
+
+        // Cria as Solicitações
+        foreach ($prestadores as $key => $prestador) {
+            
+            
+
+        }
+
+    }
+
+    public function Aceitar($request, $response, $args) {
 
         $id = $args['id_solicitacao'];
         $dao = new OrcamentoDAO;    
@@ -19,22 +59,7 @@ class OrcamentoController {
         $this->email_cliente($id);
        
     }
-    public function Recusada($request, $response, $args) {
-        
-        $id = $args['id_solicitacao'];
-        
-        $dao = new OrcamentoDAO;    
-        $msg = $dao->buscarPorId($id);
-        $msg->flag = '1';
-        $dao->Update($msg);
-        
-        if(
-            is_bool($Cliente)){ $response->withJson($Cliente);
-        }
-        else {
-            return $response->withJson($Cliente);
-        }
-    }
+
     public function email_cliente($id){
         $solicitacao_dao = new SolicitacaoDAO;
         $solicitacao = $solicitacao_dao->buscarPorId($id);

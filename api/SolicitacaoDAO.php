@@ -36,6 +36,7 @@
             $comando->bindParam(":id_solicitacao",$solicitacao->id_solicitacao);
             return $comando;        
         }
+
         public function buscarIdSolicitacao(Solicitacao $solicitacao)
         {
             $query = 'SELECT id_solicitacao FROM solicitacao WHERE  id_cliente=:id_cliente and id_prestador=:id_prestador and id_tipo_servico=:id_tipo_servico and id_tipo_servico=:id_status_servico and id_orcamento=:id_orcamento';
@@ -51,6 +52,7 @@
 		    return new Prestador($result->id,$result->descricao);           
 
         }
+        
         public function buscarPorId($id) {
 
             $query = 'SELECT * FROM solicitacao WHERE id_solicitacao=:id';

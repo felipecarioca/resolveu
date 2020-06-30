@@ -2,22 +2,20 @@
     
     use \Psr\Http\Message\ServerRequestInterface as Request;
     use \Psr\Http\Message\ResponseInterface as Response;
-
-    include_once('PrestadorController.php');
     
-    include_once('OrcamentoController.php');
+    //include_once('OrcamentoController.php');
 
     require './vendor/autoload.php';
 
+    // ---- Configurações ----
     $app = new \Slim\App([
         'settings' => [
             'displayErrorDetails' => true,
             'addContentLengthHeader' => false
         ]
-    ]);    	
+    ]);
 
-
-    // Clientes
+    // ---- Clientes ----
     $app->group('/clientes', function() use ($app) {
 
         include_once('ClienteController.php');
@@ -26,15 +24,51 @@
         $app->post('','ClienteController:inserir');
         
         $app->get('/{id}','ClienteController:buscarPorId');    
-        //$app->get('/{email}','ClienteController:logar');
         $app->put('/{id}','ClienteController:atualizar');
         $app->delete('/{id}', 'ClienteController:deletar');
 
     });
 
+    // ---- Cliente Login ----
+    $app->group('/cliente-login', function() use ($app) {
+        
+        include_once('ClienteController.php');
+
+        $app->post('','ClienteController:logar');
+    });
+
+    // ---- Tipo de Serviço ----
+    $app->group('/tipo-servico', function() use ($app) {
+        
+        include_once('TipoServicoController.php');
+
+        // Gets
+        $app->get('/busca-servico/{descricao}','TipoServicoController:buscarPorDescricao');    
+        $app->get('/{id}','TipoServicoController:buscarPorId');
+
+        // Posts
+        $app->post('','TipoServicoController:email');
+
+    });
+
+    // ---- Cliente Login ----
+    $app->group('/orcamento', function() use ($app) {
+        
+        include_once('OrcamentoController.php');
+
+        $app->post('/orcar','OrcamentoController:orcar');
+
+    });
+
+
+
+
+
     // Prestadores
     $app->group('/prestador', function() use ($app) {
         
+        include_once('PrestadorController.php');
+
         $app->get('','PrestadorController:listar');
         $app->get('/{id}','PrestadorController:buscarPorId');    
 
@@ -46,12 +80,6 @@
         // Busca por Serviço
         $app->get('/buscar-por-servico/{id}','PrestadorController:buscarPorServico');
 
-    });
-
-    // Cliente Login
-    $app->group('/clientelogin', function() use ($app) {
-       
-        $app->post('','ClienteController:logar');
     });
     
     // Serviço
@@ -65,19 +93,6 @@
 
     });
     */
-
-    $app->group('/tipo-servico', function() use ($app) {
-        
-        include_once('TipoServicoController.php');
-
-        // Gets
-        $app->get('/busca-servico/{descricao}','TipoServicoController:buscarPorDescricao');    
-        $app->get('/{id}','TipoServicoController:buscarPorId');
-
-        // Posts
-        $app->post('','TipoServicoController:email');
-
-    });
     
     $app->group('/prestadorServ', function() use ($app) {
           

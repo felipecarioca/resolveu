@@ -10,12 +10,15 @@
         public function inserir(Orcamento $orcamento)
         {
               
-            $qInserir = "INSERT INTO orcamento(descricao) VALUES (:descricao)";            
+            $qInserir = "INSERT INTO orcamento(descricao,id_cliente,cep,id_tipo_servico) VALUES (:descricao,:id_cliente,:cep, :id_tipo_servico)";            
             
             $pdo = PDOFactory::getConexao();
             
             $comando = $pdo->prepare($qInserir);
             $comando->bindParam(":descricao",$orcamento->descricao);
+            $comando->bindParam(":id_cliente",$orcamento->id_cliente);
+            $comando->bindParam(":cep",$orcamento->cep);
+            $comando->bindParam(":id_tipo_servico",$orcamento->id_tipo_servico);
                        
             $comando->execute();
             
@@ -24,9 +27,13 @@
             return $id;
         }
 
+        /*
+
+        @ Comentado por Felipe Pereira 
+
         public function buscarOrcamento($orcamento)
         {
-            $query = 'SELECT id_orcamento FROM orcamento WHERE descricao=:descricao';
+            $query = 'SELECT * FROM orcamento WHERE descricao=:descricao';
             
             $pdo = PDOFactory::getConexao(); 
             
@@ -39,6 +46,7 @@
             
             return new Orcamento($result->id,$result->descricao);           
         }
+        */
 
         public function buscarPorId($id) {
 
@@ -52,7 +60,9 @@
            $comando->execute();
           
            $result = $comando->fetch(PDO::FETCH_OBJ);
-           return new Orcamento($result->id, $result->descricao);           
+
+           return new Orcamento($result->id, $result->descricao, $result->id_cliente, $result->cep, $result->id_tipo_servico);
+           
        }
            
         
