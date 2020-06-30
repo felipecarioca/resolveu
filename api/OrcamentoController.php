@@ -40,7 +40,6 @@ class OrcamentoController {
 
         $prestadores = $prestadorDao->buscarPorServico($parametros['id_tipo_servico']);
 
-        //print_r($prestadores);
         // Cria as Solicitações
 
         $solicitacaoDao = new SolicitacaoDao;
@@ -52,6 +51,7 @@ class OrcamentoController {
             $solicitacaoDao->inserir($solicitacao);
 
             // ENVIAR E-MAIL AQUI
+            //$prestadorDao->enviarSolicitacao($solicitacao);
 
         }
 

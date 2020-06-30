@@ -67,6 +67,7 @@
         include_once('SolicitacaoController.php');
 
         $app->get('/{id}','SolicitacaoController:buscarPorId');
+        $app->get('/aceitar/{id}','SolicitacaoController:aceitar');
 
     });
 
