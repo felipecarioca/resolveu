@@ -40,6 +40,14 @@ class TipoServicoController {
         
     }
 
+    public function listar($request, $response, $args) {
+        
+        $dao = new TipoServicoDAO;    
+        $tipos =  $dao->listar();
+                
+        return $response->withJson($tipos);    
+    }
+
     public function email($request, $response, $args){
 
         $mensagem = $request->getParsedBody();             

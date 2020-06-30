@@ -43,8 +43,9 @@
         include_once('TipoServicoController.php');
 
         // Gets
-        $app->get('/busca-servico/{descricao}','TipoServicoController:buscarPorDescricao');    
+        $app->get('/busca-servico/{descricao}','TipoServicoController:buscarPorDescricao');
         $app->get('/{id}','TipoServicoController:buscarPorId');
+        $app->get('','TipoServicoController:listar');
 
         // Posts
         $app->post('','TipoServicoController:email');

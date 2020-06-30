@@ -45,6 +45,24 @@
             
         }
 
+        public function listar() {
+
+            $query = 'SELECT * FROM tipo_servico';
+
+            $pdo = PDOFactory::getConexao();
+
+            $comando = $pdo->prepare($query);
+            $comando->execute();
+
+            $tipos = array();
+
+            while($row = $comando->fetch(PDO::FETCH_OBJ)){
+                $tipos[] = new TipoServico($row->id_tipo_servico, $row->descricao);
+            }
+
+            return $tipos;
+        }
+
         /*
         
         public function buscarPorIdServ($id)
