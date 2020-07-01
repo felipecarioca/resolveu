@@ -1,7 +1,11 @@
 <?php
 
+
+include_once('ClienteDAO.php');
+
 include_once('Orcamento.php');
 include_once('OrcamentoDAO.php');
+
 
 include_once('Solicitacao.php');
 include_once('SolicitacaoDAO.php');
@@ -51,13 +55,14 @@ class OrcamentoController {
             $id_novaSolicitacao=$solicitacaoDao->inserir($solicitacao);
 
             // ENVIAR E-MAIL AQUI
+           
             $this->email_prestador($id_novaSolicitacao);
 
         }
 
     }
 
-    public function Aceitar($request, $response, $args) {
+    public function Aceita($request, $response, $args) {
 
         $id = $args['id'];
         $this->email_cliente($id);
@@ -68,14 +73,18 @@ class OrcamentoController {
         $solicitacao_dao = new SolicitacaoDAO;
         $solicitacao = $solicitacao_dao->buscarPorId($id);
         
-        $cliente_dao = new ClienteDAO;                
-        $cliente = $cliente_dao->buscarPorId($solicitacao->id_cliente);
+
         $prestador_dao = new PrestadorDAO;
         $prestador = $prestador_dao->buscarPorId($solicitacao->id_prestador);
         $orcamento_dao = new OrcamentoDAO;
-        $orcamento = $orcamento_dao->buscarPorId($solicitacao_dao->id_orcamento);
+        $orcamento = $orcamento_dao->buscarPorId($solicitacao->orcamento);
 
-        $email_remetente = $prestador->email;
+        $cliente_dao = new ClienteDAO;                
+        $cliente = $cliente_dao->buscarPorId($orcamento->id_cliente);
+
+        var_dump($cliente);
+
+        $email_remetente = "teste@resolveu.kinghost.net";
      
         $email_reply="resolveu@bananamachinada.com.br";
         
@@ -93,11 +102,11 @@ class OrcamentoController {
 	  <div class="text-author" style="bordeR: 1px solid rgba(0,0,0,.05);max-width: 50%;margin: 0 auto;padding: 2em;" >
 		  <div style="text-align: center;">
 		<img src="'.$prestador_img.'" alt="" style="width: 100px; max-width: 600px; height: auto; margin: auto; display: block;">
-		  <h3 class="name" style="font-size:22px; color:#213b52">'.$prestador->nome.'</h3><br>
+		  <h3 class="name" style="font-size:22px; color:#213b52">'.$prestador->empresa.'</h3><br>
 		</div>
 		<div style="text-align: left; color:black; font-size:16px">
 		  <span class="position"><b style="color:#213b52">Nome do prestador:</b> '.$prestador->nome.'</span><br>
-		<span class="position"><b style="color:#213b52">Telefone: </b>'.$prestador->telefone.'</span><br>
+		<span class="position"><b style="color:#213b52">Telefone: </b>'.$prestador->fone.'</span><br>
 		<span class="position"><b style="color:#213b52">Endereço:</b> '.$prestador->endereco.'</span><br><br>
 		<a href="https://www.google.com/maps/search/'.$prestador->endereco.'" style="color:green" >Ver no mapa</a><br>
 		<a href="#" style="color:green" >Ver perfil no site</a>
@@ -487,9 +496,9 @@ class OrcamentoController {
         $email_conteudo .= "Telefone =".$prestador->telefone."\n"; 
         $email_conteudo .= "Mensagem =".$orcamento->descricao."\n";*/
         
-        $email_headers = implode ( "\n",array ( "From: $email_remetente", "Reply-To: $email_reply", "Return-Path: $email_remetente","MIME-Version: 1.0","X-Priority: 3","Content-Type: text/html; charset=UTF-8" ) );
+        $email_headers = implode ( "\n",array ( "From: $email_remetente", "Reply-To: $email_reply", "Return-Path: $email_remetente","MIME-Version: 1.0","Content-Type: text/html; charset=UTF-8") );
 
-        if (mail($cliente->email, $email_assunto, nl2br($email_conteudo), $email_headers)){ 
+        if (mail($cliente->email, $email_assunto, $email_conteudo, $email_headers)){ 
             echo "</b>E-Mail enviado com sucesso!</b>"; 
             }    
             else{ 
@@ -501,15 +510,17 @@ class OrcamentoController {
         $orcamento_dao=new OrcamentoDAO;
         $prestador_dao = new PrestadorDAO;
         $cliente_dao = new ClienteDAO;
-        
+
+
         $solicitacao = $solicitacao_dao->buscarPorId($id);
+     
         $id_orcamento = $solicitacao->orcamento;
         $orcamento=$orcamento_dao->buscarPorId($id_orcamento);
         $descricao = $orcamento->descricao;
         $prestador = $prestador_dao->buscarPorId($solicitacao->id_prestador);
         $cliente = $cliente_dao->buscarPorId($orcamento->id_cliente);
-        
-        $email_remetente = $cliente->email;
+
+        $email_remetente = "teste@resolveu.kinghost.net";
         
         $email_reply="resolveu@bananamachinada.com.br";
         $email_assunto = "Consultou ResolveU";
@@ -517,7 +528,7 @@ class OrcamentoController {
         <tr>
         <td style="padding: 0 2.5em; text-align: center; padding-bottom: 3em;">
         <div class="text">
-            <h2>'.$$cliente->nome.'Solicitou seu contato para um serviço</h2>
+            <h2>'.$cliente->nome.'Solicitou seu contato para um serviço</h2>
         </div>
         </td>
         </tr>
@@ -531,8 +542,8 @@ class OrcamentoController {
                 '.$descricao.'
             </span>
             <div style="text-align:center" >
-                <p><a href="http://resolveu.kinghost.net/app_resolveu/public/solicitacaoAceita/'.$id.'" class="btn btn-primary" style="border-radius: 5px;background: #17bebb;color: #ffffff; padding: 10px 15px; display: inline-block;">Aceitar</a></p>
-                <p><a href="http://resolveu.kinghost.net/app_resolveu/public/solicitacaoRecusada/"'.$id.'style="border-radius: 5px;background: #dc3545; color: #ffffff; padding: 10px 15px; display: inline-block;">Recusar</a></p>
+                <p><a href="http://resolveu.kinghost.net/resolveu/api/solicitacaoAceita/'.$id.'" class="btn btn-primary" style="border-radius: 5px;background: #17bebb;color: #ffffff; padding: 10px 15px; display: inline-block;">Aceitar</a></p>
+                <p><a href="http://resolveu.kinghost.net/app_resolveu/public/solicitacaoRecusada/" style="border-radius: 5px;background: #dc3545; color: #ffffff; padding: 10px 15px; display: inline-block;">Recusar</a></p>
                 </div>
             </div>
         </td>';
@@ -911,9 +922,11 @@ class OrcamentoController {
         </body>
         </html>';
         
-        $email_headers = implode ( "\n",array ( "From: $email_remetente", "Reply-To: $email_reply", "Return-Path: $email_remetente","MIME-Version: 1.0","X-Priority: 3","Content-Type: text/html; charset=UTF-8" ) );
+        $email_headers = implode ( "\n",array ( "From: $email_remetente", "Reply-To: $email_reply", "Return-Path: $email_remetente","MIME-Version: 1.0","Content-Type: text/html; charset=UTF-8" ) );
         $email=$prestador->email;
-       if (mail($email, $email_assunto, nl2br($email_conteudo), $email_headers)){ 
+
+       if (mail($email, $email_assunto, $email_conteudo, $email_headers)){ 
+           var_dump($email_conteudo);
             echo "</b>E-Mail enviado com sucesso!</b>"; 
             }    
             else{ 

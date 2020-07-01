@@ -63,6 +63,7 @@
 
         public function buscarPorId($id) {
 
+           
             $query = 'SELECT * FROM solicitacao WHERE id_solicitacao=:id';
 
            $pdo = PDOFactory::getConexao(); 
@@ -70,14 +71,16 @@
            $comando = $pdo->prepare($query);
            $comando->bindParam (':id', $id);
          
+        
            $comando->execute();
           
            $result = $comando->fetch(PDO::FETCH_OBJ);
 
+         
            $orcamentoDao = new OrcamentoDao;
            $orcamento = $orcamentoDao->buscarPorId($result->id_orcamento);
-
-           return new Solicitacao($result->id_solicitacao, $orcamento, $result->id_prestador);           
+                
+           return new Solicitacao($result->id_solicitacao, $orcamento->id, $result->id_prestador);   //está com problema        
        }
 
         
