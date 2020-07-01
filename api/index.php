@@ -48,7 +48,7 @@
         $app->get('','TipoServicoController:listar');
 
         // Posts
-        $app->post('','TipoServicoController:email');
+        //$app->post('','OrcamentoController:email_prestador');
 
     });
 
