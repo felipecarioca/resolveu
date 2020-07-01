@@ -59,7 +59,7 @@ class OrcamentoController {
 
     public function Aceitar($request, $response, $args) {
 
-        $id = $args['id_solicitacao'];
+        $id = $args['id'];
         $this->email_cliente($id);
        
     }
@@ -531,8 +531,8 @@ class OrcamentoController {
                 '.$descricao.'
             </span>
             <div style="text-align:center" >
-                <p><a href="http://resolveu.kinghost.net/app_resolveu/public/prestadores/Aceitar/'.$id.'" class="btn btn-primary" style="border-radius: 5px;background: #17bebb;color: #ffffff; padding: 10px 15px; display: inline-block;">Aceitar</a></p>
-                <p><a href="http://resolveu.kinghost.net/app_resolveu/public/prestadores/Recusar"  style="border-radius: 5px;background: #dc3545; color: #ffffff; padding: 10px 15px; display: inline-block;">Recusar</a></p>
+                <p><a href="http://resolveu.kinghost.net/app_resolveu/public/solicitacaoAceita/'.$id.'" class="btn btn-primary" style="border-radius: 5px;background: #17bebb;color: #ffffff; padding: 10px 15px; display: inline-block;">Aceitar</a></p>
+                <p><a href="http://resolveu.kinghost.net/app_resolveu/public/solicitacaoRecusada/"'.$id.'style="border-radius: 5px;background: #dc3545; color: #ffffff; padding: 10px 15px; display: inline-block;">Recusar</a></p>
                 </div>
             </div>
         </td>';
