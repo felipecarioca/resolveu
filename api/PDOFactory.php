@@ -8,7 +8,7 @@
             if(!isset($pdo)){
                 $conexao = "mysql:host=localhost;dbname=resolveu;charset=utf8";
                 $usuario = "root";
-                $senha = "";
+                $senha = "root";
 
                 $pdo = new PDO($conexao, $usuario, $senha);
 
