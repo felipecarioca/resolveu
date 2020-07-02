@@ -11,8 +11,9 @@
         public $id_tipo_servico;
         public $endereco;
         public $empresa;
+        public $recomendacoes;
                 
-        function __construct($id, $nome, $cpf, $email,$cep,$fone,$senha,$id_tipo_servico,$endereco,$empresa){
+        function __construct($id, $nome, $cpf, $email,$cep,$fone,$senha,$id_tipo_servico,$endereco,$empresa,$recomendacoes){
             
             $this->id = $id;
             $this->nome = $nome;
@@ -24,6 +25,7 @@
             $this->id_tipo_servico = $id_tipo_servico;
             $this->endereco = $endereco;
             $this->empresa = $empresa;
+            $this->recomendacoes = $recomendacoes;
            
         }
     }

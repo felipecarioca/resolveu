@@ -37,7 +37,7 @@ class PrestadorController {
     public function inserir( $request, $response, $args) {
         
         $prestador = $request->getParsedBody();
-        $prestador = new Prestador(0,$prestador['nome'],$prestador['cpf'],$prestador['email'], $prestador['cep'],$prestador['fone'],$prestador['senha'],$prestador['id_tipo_servico'], $prestador['endereco'], $prestador['empresa']);
+        $prestador = new Prestador(0,$prestador['nome'],$prestador['cpf'],$prestador['email'], $prestador['cep'],$prestador['fone'],$prestador['senha'],$prestador['id_tipo_servico'], $prestador['endereco'], $prestador['empresa'], $prestador['recomendacoes']);
         
         $dao = new PrestadorDAO;
         
@@ -69,6 +69,17 @@ class PrestadorController {
         $prestador = $dao->deletar($id);
         
         return $response->withJson($prestador);  
+    }
+
+    public function recomendar($request, $response, $args) {
+        
+        $id = $args['id']; // id_prestador
+        
+        $dao = new PrestadorDAO;
+        
+        $prestador = $dao->recomendar($id);
+    
+        return $response->withJson($prestador);
     }
 
 }

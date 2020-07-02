@@ -1,5 +1,6 @@
 <?php
     ob_end_clean();//HOT FIX
+
     use \Psr\Http\Message\ServerRequestInterface as Request;
     use \Psr\Http\Message\ResponseInterface as Response;
     use \Slim\Middleware\ContentLengthMiddleware;
@@ -15,7 +16,7 @@
             'addContentLengthHeader' => false,
         ]
     ]);
-   
+    
     // ---- Clientes ----
     $app->group('/clientes', function() use ($app) {
 
@@ -25,6 +26,8 @@
         $app->post('','ClienteController:inserir');
         
         $app->get('/{id}','ClienteController:buscarPorId');    
+        $app->get('/busca-duplicidade/{cpf}','ClienteController:verificaDuplicidade');
+
         $app->put('/{id}','ClienteController:atualizar');
         $app->delete('/{id}', 'ClienteController:deletar');
 
@@ -88,6 +91,8 @@
         // Busca por Serviço
         $app->get('/buscar-por-servico/{id}','PrestadorController:buscarPorServico');
 
+        $app->get('/recomendar/{id}','PrestadorController:recomendar');
+
     });
     
     // Serviço
@@ -100,24 +105,20 @@
         $app->get('/{id}','TipoServicoController:buscarPorId');
 
     });
-    */
     
     $app->group('/prestadorServ', function() use ($app) {
           
         $app->get('/{word}','TipoServicoController:buscarPorIdServ');  
       
     });
+    */
     
-    $app->group('/solicitacaoAceita', function() use ($app) {
+    $app->group('/solicitacao', function() use ($app) {
           
-        $app->get('/{id}','OrcamentoController:Aceita');  
+        $app->get('/aceita/{id}','SolicitacaoController:aceita');  
       
-    });     
-    $app->group('/solicitacaoRecusada', function() use ($app) {
-          
-        $app->get('/{id_solicitacao}','OrcamentoController:Recusada');  
-      
-    });   
+    });
+
     $app->run();
 
 ?>

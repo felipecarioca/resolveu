@@ -8,18 +8,26 @@ class ClienteController {
    
 
     public function inserir( $request, $response, $args) {
+        
         $c = $request->getParsedBody();
+        
         $Cliente = new Cliente($c['id'],$c['nome'], $c['cpf'], $c['email'],$c['senha'],$c['cep'],$c['fone'] );
+        
         $dao = new ClienteDAO;
+        
         $Cliente = $dao->inserir($Cliente);
-        return $response->withJson($Cliente,201);
+
+        if(!$Cliente)
+            return $response->withJson(array("retorno"=>"0","msg"=>"CPF já existente."));
+        else
+            return $response->withJson($Cliente, 201);
 
     }
     
      public function listar($request, $response, $args) {
         $dao = new ClienteDAO;    
         $Cliente =  $dao->listar();
-                
+        
         return $response->withJson($Cliente);    
     }
 
@@ -32,6 +40,7 @@ class ClienteController {
         else{
         return $response->withJson($Cliente);}
     }
+
     public function atualizar($request, $response, $args) {
         $id = $args['id'];
         $c = $request->getParsedBody();

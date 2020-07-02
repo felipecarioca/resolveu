@@ -7,6 +7,10 @@
         public function inserir(Cliente $Cliente)
         {
             
+            if($this->verificaDuplicidade($Cliente->cpf)) {
+                return false;
+            }
+
             $qInserir = "INSERT INTO cliente(nome, senha, email, cpf, cep, fone) VALUES (:nome,:senha,:email,:cpf,:cep,:fone)";            
             $pdo = PDOFactory::getConexao();
             $comando = $pdo->prepare($qInserir);
@@ -17,9 +21,12 @@
             $comando->bindParam(":cep",$Cliente->cep);
             $comando->bindParam(":fone",$Cliente->telefone);
             $comando->execute();
+            
             $Cliente->id = $pdo->lastInsertId();
+
             return $Cliente;           
         }
+
         public function deletar($id)
         {
             $qDeletar = "DELETE from cliente WHERE id_cliente=:id";            
@@ -74,6 +81,24 @@
                 $teste = new Cliente($result->id_cliente,$result->nome,$result->cpf, $result->email, $result->senha, $result->cep, $result->fone, $result->cep);        
                     return $teste;                    
                     }    
+        }
+
+        public function verificaDuplicidade($cpf)
+        {
+            $query = 'SELECT * FROM cliente WHERE cpf=:cpf';
+
+            $pdo = PDOFactory::getConexao();
+            
+            $comando = $pdo->prepare($query);
+            $comando->bindParam (':cpf', $cpf);
+            $comando->execute();
+            
+            $result = $comando->fetch(PDO::FETCH_OBJ);
+
+            if($result === false)
+                return false; // Não há duplicidade
+            else
+                return true; // Há duplicidade
         }
         
         public function logar($email, $senha)
