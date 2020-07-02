@@ -18,7 +18,7 @@ class ClienteController {
         $Cliente = $dao->inserir($Cliente);
 
         if(!$Cliente)
-            return $response->withJson(array("retorno"=>"0","msg"=>"CPF já existente."));
+            return $response->withJson(array("retorno"=>"10","msg"=>"CPF já existente."));
         else
             return $response->withJson($Cliente, 201);
 
