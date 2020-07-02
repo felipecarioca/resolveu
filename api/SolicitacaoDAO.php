@@ -49,7 +49,7 @@
            $orcamentoDao = new OrcamentoDao;
            $orcamento = $orcamentoDao->buscarPorId($result->id_orcamento);
                 
-           return new Solicitacao($result->id_solicitacao, $orcamento->id, $result->id_prestador);   //está com problema        
+           return new Solicitacao($result->id_solicitacao, $orcamento->id, $result->id_prestador, $result->aceita);   //está com problema        
         }
         
     }
