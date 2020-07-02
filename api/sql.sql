@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 02-Jul-2020 às 02:16
+-- Generation Time: 02-Jul-2020 às 10:34
 -- Versão do servidor: 10.1.39-MariaDB
 -- versão do PHP: 7.3.5
 
@@ -44,7 +44,8 @@ CREATE TABLE `cliente` (
 
 INSERT INTO `cliente` (`id_cliente`, `nome`, `cpf`, `email`, `cep`, `fone`, `senha`) VALUES
 (1, 'Felipe Pereira', '03377821058', 'felipe.lfpm@gmail.com', '90620-110', '(51) 99620-3669', '1234'),
-(2, 'Guilherme', '03377821058', 'guilherme@gmail.com', '90620-110', '(51) 99620-3669', '1234');
+(2, 'Guilherme', '03377821058', 'guilherme@gmail.com', '90620-110', '(51) 99620-3669', '1234'),
+(3, 'Felipe', '03377821051', '', '90620001', '51 996203669', '1234');
 
 -- --------------------------------------------------------
 
@@ -91,19 +92,20 @@ CREATE TABLE `prestador` (
   `senha` varchar(256) NOT NULL,
   `id_tipo_servico` int(5) DEFAULT NULL,
   `endereco` varchar(256) DEFAULT NULL,
-  `empresa` varchar(256) DEFAULT NULL
+  `empresa` varchar(256) DEFAULT NULL,
+  `recomendacoes` int(12) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `prestador`
 --
 
-INSERT INTO `prestador` (`id_prestador`, `nome`, `cpf`, `email`, `cep`, `fone`, `senha`, `id_tipo_servico`, `endereco`, `empresa`) VALUES
-(1, 'Jorge', '03377821058', 'jorge@gmail.com', '90620-110', '(51) 99620-3669', '1234', 1, 'Avenida Bento Gonçalves, 1800, Porto Alegre - Rio Grande do Sul', 'Sapateria do Jorge'),
-(2, 'Ricardo', '03377821058', 'ricardo@gmail.com', '90620-110', '(51) 99620-3669', '1234', 1, NULL, NULL),
-(3, 'Luiz', '03377821058', 'luiz@gmail.com', '90620-110', '(51) 99620-3669', '1234', 1, NULL, NULL),
-(4, 'José', '03377821058', 'jose@gmail.com', '90620-110', '(51) 99620-3669', '1234', 2, NULL, NULL),
-(5, 'Fulano da Silva', '0000000000', 'email@agm.com', '90620110', '2312312312', '132431231513125v', 1, 'Avenida ATl 1111', 'Sapataria do Fulano');
+INSERT INTO `prestador` (`id_prestador`, `nome`, `cpf`, `email`, `cep`, `fone`, `senha`, `id_tipo_servico`, `endereco`, `empresa`, `recomendacoes`) VALUES
+(1, 'Jorge', '03377821058', 'jorge@gmail.com', '90620-110', '(51) 99620-3669', '1234', 1, 'Avenida Bento Gonçalves, 1800, Porto Alegre - Rio Grande do Sul', 'Sapateria do Jorge', 1),
+(2, 'Ricardo', '03377821058', 'ricardo@gmail.com', '90620-110', '(51) 99620-3669', '1234', 1, NULL, NULL, 0),
+(3, 'Luiz', '03377821058', 'luiz@gmail.com', '90620-110', '(51) 99620-3669', '1234', 1, NULL, NULL, 0),
+(4, 'José', '03377821058', 'jose@gmail.com', '90620-110', '(51) 99620-3669', '1234', 2, NULL, NULL, 0),
+(5, 'Fulano da Silva', '0000000000', 'email@agm.com', '90620110', '2312312312', '132431231513125v', 1, 'Avenida ATl 1111', 'Sapataria do Fulano', 0);
 
 -- --------------------------------------------------------
 
@@ -128,18 +130,19 @@ CREATE TABLE `servico` (
 CREATE TABLE `solicitacao` (
   `id_solicitacao` int(12) NOT NULL,
   `id_orcamento` int(12) NOT NULL,
-  `id_prestador` int(12) NOT NULL
+  `id_prestador` int(12) NOT NULL,
+  `aceita` int(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `solicitacao`
 --
 
-INSERT INTO `solicitacao` (`id_solicitacao`, `id_orcamento`, `id_prestador`) VALUES
-(1, 9, 1),
-(2, 9, 2),
-(3, 9, 3),
-(4, 9, 5);
+INSERT INTO `solicitacao` (`id_solicitacao`, `id_orcamento`, `id_prestador`, `aceita`) VALUES
+(1, 9, 1, NULL),
+(2, 9, 2, NULL),
+(3, 9, 3, NULL),
+(4, 9, 5, NULL);
 
 -- --------------------------------------------------------
 
@@ -233,7 +236,7 @@ ALTER TABLE `tipo_servico`
 -- AUTO_INCREMENT for table `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `id_cliente` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_cliente` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `orcamento`
