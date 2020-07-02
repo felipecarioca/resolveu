@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 30-Jun-2020 às 18:47
+-- Generation Time: 02-Jul-2020 às 02:16
 -- Versão do servidor: 10.1.39-MariaDB
 -- versão do PHP: 7.3.5
 
@@ -35,7 +35,7 @@ CREATE TABLE `cliente` (
   `email` varchar(64) DEFAULT NULL,
   `cep` varchar(12) NOT NULL,
   `fone` varchar(16) DEFAULT NULL,
-  `senha` varchar(16) NOT NULL
+  `senha` varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -88,7 +88,7 @@ CREATE TABLE `prestador` (
   `email` varchar(64) DEFAULT NULL,
   `cep` varchar(12) NOT NULL,
   `fone` varchar(16) DEFAULT NULL,
-  `senha` varchar(16) NOT NULL,
+  `senha` varchar(256) NOT NULL,
   `id_tipo_servico` int(5) DEFAULT NULL,
   `endereco` varchar(256) DEFAULT NULL,
   `empresa` varchar(256) DEFAULT NULL

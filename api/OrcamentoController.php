@@ -1,6 +1,5 @@
 <?php
 
-
 include_once('ClienteDAO.php');
 
 include_once('Orcamento.php');
@@ -55,7 +54,7 @@ class OrcamentoController {
             $id_novaSolicitacao=$solicitacaoDao->inserir($solicitacao);
 
             // ENVIAR E-MAIL AQUI
-           
+            
             $this->email_prestador($id_novaSolicitacao);
 
         }
