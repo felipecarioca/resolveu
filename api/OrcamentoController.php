@@ -49,9 +49,9 @@ class OrcamentoController {
 
         foreach ($prestadores as $key => $prestador) {
             
-            $solicitacao = new Solicitacao(0, $orcamento, $prestador->id);
+            $solicitacao = new Solicitacao(0, $orcamento, $prestador->id, 0);
 
-            $id_novaSolicitacao=$solicitacaoDao->inserir($solicitacao);
+            $id_novaSolicitacao = $solicitacaoDao->inserir($solicitacao);
 
             // ENVIAR E-MAIL AQUI
             
