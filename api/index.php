@@ -1,8 +1,9 @@
 <?php
-    
+    ob_end_clean();//HOT FIX
     use \Psr\Http\Message\ServerRequestInterface as Request;
     use \Psr\Http\Message\ResponseInterface as Response;
-    
+    use \Slim\Middleware\ContentLengthMiddleware;
+    error_reporting(0);
     //include_once('OrcamentoController.php');
 
     require './vendor/autoload.php';
@@ -11,10 +12,10 @@
     $app = new \Slim\App([
         'settings' => [
             'displayErrorDetails' => true,
-            'addContentLengthHeader' => false
+            'addContentLengthHeader' => false,
         ]
     ]);
-
+   
     // ---- Clientes ----
     $app->group('/clientes', function() use ($app) {
 
