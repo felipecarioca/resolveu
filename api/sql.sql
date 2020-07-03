@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 02-Jul-2020 às 10:34
+-- Generation Time: 03-Jul-2020 às 07:55
 -- Versão do servidor: 10.1.39-MariaDB
 -- versão do PHP: 7.3.5
 
@@ -93,19 +93,23 @@ CREATE TABLE `prestador` (
   `id_tipo_servico` int(5) DEFAULT NULL,
   `endereco` varchar(256) DEFAULT NULL,
   `empresa` varchar(256) DEFAULT NULL,
-  `recomendacoes` int(12) DEFAULT NULL
+  `recomendacoes` int(12) DEFAULT NULL,
+  `uf` char(2) DEFAULT NULL,
+  `cidade` varchar(128) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `prestador`
 --
 
-INSERT INTO `prestador` (`id_prestador`, `nome`, `cpf`, `email`, `cep`, `fone`, `senha`, `id_tipo_servico`, `endereco`, `empresa`, `recomendacoes`) VALUES
-(1, 'Jorge', '03377821058', 'jorge@gmail.com', '90620-110', '(51) 99620-3669', '1234', 1, 'Avenida Bento Gonçalves, 1800, Porto Alegre - Rio Grande do Sul', 'Sapateria do Jorge', 1),
-(2, 'Ricardo', '03377821058', 'ricardo@gmail.com', '90620-110', '(51) 99620-3669', '1234', 1, NULL, NULL, 0),
-(3, 'Luiz', '03377821058', 'luiz@gmail.com', '90620-110', '(51) 99620-3669', '1234', 1, NULL, NULL, 0),
-(4, 'José', '03377821058', 'jose@gmail.com', '90620-110', '(51) 99620-3669', '1234', 2, NULL, NULL, 0),
-(5, 'Fulano da Silva', '0000000000', 'email@agm.com', '90620110', '2312312312', '132431231513125v', 1, 'Avenida ATl 1111', 'Sapataria do Fulano', 0);
+INSERT INTO `prestador` (`id_prestador`, `nome`, `cpf`, `email`, `cep`, `fone`, `senha`, `id_tipo_servico`, `endereco`, `empresa`, `recomendacoes`, `uf`, `cidade`) VALUES
+(1, 'Jorge', '03377821058', 'jorge@gmail.com', '90620-110', '(51) 99620-3669', '1234', 1, 'Avenida Bento Gonçalves, 1800, Porto Alegre - Rio Grande do Sul', 'Sapateria do Jorge', 1, NULL, NULL),
+(2, 'Ricardo', '03377821058', 'ricardo@gmail.com', '90620-110', '(51) 99620-3669', '1234', 1, NULL, NULL, 0, NULL, NULL),
+(3, 'Luiz', '03377821058', 'luiz@gmail.com', '90620-110', '(51) 99620-3669', '1234', 1, NULL, NULL, 0, NULL, NULL),
+(4, 'José', '03377821058', 'jose@gmail.com', '90620-110', '(51) 99620-3669', '1234', 2, NULL, NULL, 0, NULL, NULL),
+(5, 'Fulano da Silva', '0000000000', 'email@agm.com', '90620110', '2312312312', '132431231513125v', 1, 'Avenida ATl 1111', 'Sapataria do Fulano', 0, NULL, NULL),
+(6, 'Felipe', '03335464498', 'felipe@gafas.com', '90620110', '906202165415', '12345', 1, 'São Manoel, 1405', 'RR', 0, 'RS', NULL),
+(7, 'Felipe', '03335464498', 'felipe@gafas.com', '90620110', '906202165415', '12345', 1, 'São Manoel, 1405', 'RR', 0, 'RS', 'Porto Alegre');
 
 -- --------------------------------------------------------
 
@@ -248,7 +252,7 @@ ALTER TABLE `orcamento`
 -- AUTO_INCREMENT for table `prestador`
 --
 ALTER TABLE `prestador`
-  MODIFY `id_prestador` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_prestador` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `servico`
