@@ -12,8 +12,10 @@
         public $endereco;
         public $empresa;
         public $recomendacoes;
-                
-        function __construct($id, $nome, $cpf, $email,$cep,$fone,$senha,$id_tipo_servico,$endereco,$empresa,$recomendacoes){
+        public $uf;
+        public $cidade;
+        
+        function __construct($id, $nome, $cpf, $email,$cep,$fone,$senha,$id_tipo_servico,$endereco,$empresa,$recomendacoes,$uf,$cidade){
             
             $this->id = $id;
             $this->nome = $nome;
@@ -26,6 +28,8 @@
             $this->endereco = $endereco;
             $this->empresa = $empresa;
             $this->recomendacoes = $recomendacoes;
+            $this->uf = $uf;
+            $this->cidade = $cidade;
            
         }
     }

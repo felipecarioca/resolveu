@@ -35,7 +35,7 @@ class SolicitacaoController {
         
         }
     }
-
+    
     public function aceita($request, $response, $args) {
 
         $id = $args['id'];
@@ -52,7 +52,7 @@ class SolicitacaoController {
         $this->email_cliente($id);
        
     }
-
+    
     public function email_cliente($id) {
         
         $solicitacao_dao = new SolicitacaoDAO;

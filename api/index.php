@@ -118,7 +118,7 @@
         $app->get('/aceita/{id}','SolicitacaoController:aceita');  
       
     });
-
+    
     $app->run();
 
 ?>

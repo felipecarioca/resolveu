@@ -3,7 +3,6 @@
 include_once('Prestador.php');
 include_once('PrestadorDAO.php');
 
-
 class PrestadorController {
 
     public function listar($request, $response, $args) {
@@ -37,7 +36,7 @@ class PrestadorController {
     public function inserir( $request, $response, $args) {
         
         $prestador = $request->getParsedBody();
-        $prestador = new Prestador(0,$prestador['nome'],$prestador['cpf'],$prestador['email'], $prestador['cep'],$prestador['fone'],$prestador['senha'],$prestador['id_tipo_servico'], $prestador['endereco'], $prestador['empresa'], $prestador['recomendacoes']);
+        $prestador = new Prestador(0,$prestador['nome'],$prestador['cpf'],$prestador['email'], $prestador['cep'],$prestador['fone'],$prestador['senha'],$prestador['id_tipo_servico'], $prestador['endereco'], $prestador['empresa'], $prestador['recomendacoes'], $prestador['uf'], $prestador['cidade']);
         
         $dao = new PrestadorDAO;
         
@@ -51,7 +50,7 @@ class PrestadorController {
         $id = $args['id'];
         
         $prestador = $request->getParsedBody();
-        $prestador = new Prestador($id, $prestador['nome'],$prestador['cpf'],$prestador['email'], $prestador['cep'],$prestador['fone'],$prestador['senha'],$prestador['id_tipo_servico'], $prestador['endereco'], $prestador['empresa']);
+        $prestador = new Prestador($id, $prestador['nome'],$prestador['cpf'],$prestador['email'], $prestador['cep'],$prestador['fone'],$prestador['senha'],$prestador['id_tipo_servico'], $prestador['endereco'], $prestador['empresa'], $prestador['recomendacoes'], $prestador['uf'], $prestador['cidade']);
         
         $dao = new PrestadorDAO;
         

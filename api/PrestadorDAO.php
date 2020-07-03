@@ -1,4 +1,5 @@
 <?php
+    include_once 'ViaCep.php';
     include_once 'Prestador.php';
 	include_once 'PDOFactory.php';
 
@@ -6,7 +7,7 @@
     {
         public function inserir(Prestador $Prestador)
         {
-            $qInserir = "INSERT INTO prestador(nome, cpf, email, cep, fone, senha, id_tipo_servico,endereco,empresa,recomendacoes) VALUES (:nome,:cpf,:email,:cep,:fone,:senha,:id_tipo_servico,:endereco,:empresa,:recomendacoes)";            
+            $qInserir = "INSERT INTO prestador(nome, cpf, email, cep, fone, senha, id_tipo_servico,endereco,empresa,recomendacoes,uf,cidade) VALUES (:nome,:cpf,:email,:cep,:fone,:senha,:id_tipo_servico,:endereco,:empresa,:recomendacoes,:uf,:cidade)";            
             
             $pdo = PDOFactory::getConexao();
             
@@ -20,7 +21,18 @@
             $comando->bindParam(":id_tipo_servico",$Prestador->id_tipo_servico);
             $comando->bindParam(":endereco",$Prestador->endereco);
             $comando->bindParam(":empresa",$Prestador->empresa);
-            $comando->bindParam(":recomendacoes", 0); // Iniciamos em 0 quando criamos um novo prestador
+
+            $recomendacoes = 0;
+
+            $comando->bindParam(":recomendacoes", $recomendacoes); // Iniciamos em 0 quando criamos um novo prestador
+
+            $viaCep = new ViaCep;
+
+            $cep = $viaCep->getDados($Prestador->cep);
+
+            $comando->bindParam(":uf", $cep['uf']);
+            $comando->bindParam(":cidade", $cep['localidade']);
+
             $comando->execute();
             
             $Prestador->id = $pdo->lastInsertId();
@@ -44,7 +56,7 @@
         public function atualizar(Prestador $prestador)
         {
             
-            $query = "UPDATE prestador SET nome=:nome, cpf=:cpf, email=:email, cep=:cep, fone=:fone, senha=:senha, id_tipo_servico=:id_tipo_servico, endereco=:endereco, empresa=:empresa WHERE id_prestador=:id";            
+            $query = "UPDATE prestador SET nome=:nome, cpf=:cpf, email=:email, cep=:cep, fone=:fone, senha=:senha, id_tipo_servico=:id_tipo_servico, endereco=:endereco, empresa=:empresa, uf=:uf, cidade=:cidade WHERE id_prestador=:id";            
                                   
             $pdo = PDOFactory::getConexao();
             
@@ -60,6 +72,13 @@
             $comando->bindParam(":endereco",$prestador->endereco);
             $comando->bindParam(":empresa",$prestador->empresa);
             $comando->bindParam(":id",$prestador->id);
+
+            $viaCep = new ViaCep;
+
+            $cep = $viaCep->getDados($prestador->cep);
+
+            $comando->bindParam(":uf", $cep['uf']);
+            $comando->bindParam(":cidade", $cep['cidade']);
 
             $comando->execute();
             
@@ -78,7 +97,7 @@
             $prestadores=array();
 
 		    while($row = $comando->fetch(PDO::FETCH_OBJ)){
-			    $prestadores[] = new Prestador($row->id_prestador,$row->nome,$row->cpf, $row->email, $row->cep, $row->fone, $row->senha, $row->id_tipo_servico, $row->endereco, $row->empresa, $row->recomendacoes);
+			    $prestadores[] = new Prestador($row->id_prestador,$row->nome,$row->cpf, $row->email, $row->cep, $row->fone, $row->senha, $row->id_tipo_servico, $row->endereco, $row->empresa, $row->recomendacoes, $row->uf, $row->cidade);
             }
 
             return $prestadores;
@@ -97,7 +116,7 @@
            
 		    $result = $comando->fetch(PDO::FETCH_OBJ);
           
-		    return new Prestador($result->id_prestador,$result->nome,$result->cpf,$result->email, $result->cep,$result->fone, $result->senha, $result->id_tipo_servico, $result->endereco, $result->empresa, $result->recomendacoes);           
+		    return new Prestador($result->id_prestador,$result->nome,$result->cpf,$result->email, $result->cep,$result->fone, $result->senha, $result->id_tipo_servico, $result->endereco, $result->empresa, $result->recomendacoes, $result->uf, $result->cidade);           
         }
 
         public function buscarPorServico($id) {
@@ -113,7 +132,7 @@
             $prestadores = array();	
 		    
             while($row = $comando->fetch(PDO::FETCH_OBJ)){
-			    $prestadores[] = new Prestador($row->id_prestador,$row->nome,$row->cpf, $row->email, $row->senha,$row->cep, $row->fone,$row->id_tipo_servico, $row->endereco, $row->empresa, $row->recomendacoes);
+			    $prestadores[] = new Prestador($row->id_prestador,$row->nome,$row->cpf, $row->email, $row->senha,$row->cep, $row->fone,$row->id_tipo_servico, $row->endereco, $row->empresa, $row->recomendacoes, $row->uf, $row->cidade);
             }
 
             return $prestadores;
