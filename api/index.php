@@ -71,7 +71,7 @@
         include_once('SolicitacaoController.php');
 
         $app->get('/{id}','SolicitacaoController:buscarPorId');
-        $app->get('/aceitar/{id}','SolicitacaoController:aceitar');
+        $app->get('/aceita/{id}','SolicitacaoController:aceita');
 
     });
 
@@ -112,12 +112,6 @@
       
     });
     */
-    
-    $app->group('/solicitacao', function() use ($app) {
-          
-        $app->get('/aceita/{id}','SolicitacaoController:aceita');  
-      
-    });
     
     $app->run();
 
