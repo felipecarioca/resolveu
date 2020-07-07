@@ -96,7 +96,7 @@ class SolicitacaoController {
       
         </div><br><br>
         <span style="color:#213b52">Se você gostou do serviço deste prestador avalie</span><br><br>
-        <a href="#" style="border-radius: 5px;background: #28a745;color: #ffffff; padding: 10px 15px; display: inline-block;" >&#128077 Gostei</a> | <a href="" style="border-radius: 5px;background: #dc3545;color: #ffffff; padding: 10px 15px; display: inline-block;"> &#128078 Não gostei</a>
+        <a href="http://resolveu.kinghost.net/app_resolveu/public/prestadores/recomendarPrestador/'.$prestador->id.'" style="border-radius: 5px;background: #28a745;color: #ffffff; padding: 10px 15px; display: inline-block;" >&#128077 Gostei</a> | <a href="http://resolveu.kinghost.net/app_resolveu/public/prestadores/naoRecomendarPrestador/'.$prestador->id.'" style="border-radius: 5px;background: #dc3545;color: #ffffff; padding: 10px 15px; display: inline-block;"> &#128078 Não gostei</a>
        </div>
   </td>
 ';
