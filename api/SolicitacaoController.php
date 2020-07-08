@@ -67,11 +67,11 @@ class SolicitacaoController {
         $cliente_dao = new ClienteDAO;
         $cliente = $cliente_dao->buscarPorId($orcamento->id_cliente);
 
-        $email_remetente = "teste@resolveu.kinghost.net";
+        $email_remetente = "atendimento@resolveu.kinghost.net";
      
         $email_reply = "resolveu@bananamachinada.com.br";
         
-        $email_assunto = "Consultou ResolveU";
+        $email_assunto = "ResolveU - Contato do Prestador";
         $template_cliente = '<tr>
         <td style="padding: 0 2.5em; text-align: center; padding-bottom: 3em;">
             <div class="text">
@@ -96,7 +96,7 @@ class SolicitacaoController {
       
         </div><br><br>
         <span style="color:#213b52">Se você gostou do serviço deste prestador avalie</span><br><br>
-        <a href="http://resolveu.kinghost.net/app_resolveu/public/prestadores/recomendarPrestador/'.$prestador->id.'" style="border-radius: 5px;background: #28a745;color: #ffffff; padding: 10px 15px; display: inline-block;" >&#128077 Gostei</a> | <a href="http://resolveu.kinghost.net/app_resolveu/public/prestadores/naoRecomendarPrestador/'.$prestador->id.'" style="border-radius: 5px;background: #dc3545;color: #ffffff; padding: 10px 15px; display: inline-block;"> &#128078 Não gostei</a>
+        <a href="http://resolveu.kinghost.net/app_resolveu/public/prestadores/recomendarPrestador/'.$prestador->id.'" style="border-radius: 5px;background: #28a745;color: #ffffff; padding: 10px 15px; display: inline-block;" > '.json_decode('&#128077').' Gostei</a> | <a href="http://resolveu.kinghost.net/app_resolveu/public/prestadores/naoRecomendarPrestador/'.$prestador->id.'" style="border-radius: 5px;background: #dc3545;color: #ffffff; padding: 10px 15px; display: inline-block;"> '.json_decode('&#128078').' Não gostei</a>
        </div>
   </td>
 ';
@@ -479,7 +479,7 @@ class SolicitacaoController {
         $email_conteudo .= "Telefone =".$prestador->telefone."\n"; 
         $email_conteudo .= "Mensagem =".$orcamento->descricao."\n";*/
         
-        $email_headers = implode ( "\n",array ( "From: $email_remetente", "Reply-To: $email_reply", "Return-Path: $email_remetente","MIME-Version: 1.0","Content-Type: text/html; charset=UTF-8") );
+        $email_headers = implode ( "\n",array ( "From: ResolveU <".$email_remetente.">", "Reply-To: ResolveU <".$email_reply.">", "Return-Path: $email_remetente","MIME-Version: 1.0","Content-Type: text/html; charset=UTF-8") );
 
         if (mail($cliente->email, $email_assunto, $email_conteudo, $email_headers)) { 
             echo "</b>E-Mail enviado com sucesso!</b>"; 

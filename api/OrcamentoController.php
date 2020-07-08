@@ -77,10 +77,10 @@ class OrcamentoController {
         $prestador = $prestador_dao->buscarPorId($solicitacao->id_prestador);
         $cliente = $cliente_dao->buscarPorId($orcamento->id_cliente);
 
-        $email_remetente = "teste@resolveu.kinghost.net";
+        $email_remetente = "atendimento@resolveu.kinghost.net";
         
         $email_reply="resolveu@bananamachinada.com.br";
-        $email_assunto = "Consultou ResolveU";
+        $email_assunto = "ResolveU - Solicitação de Serviço";
         $template_prestador = '
         <tr>
         <td style="padding: 0 2.5em; text-align: center; padding-bottom: 3em;">
@@ -94,6 +94,7 @@ class OrcamentoController {
             <div class="text-author" style="bordeR: 1px solid rgba(0,0,0,.05);max-width: 50%;margin: 0 auto;padding: 2em;">
                 <img src="images/person_2.jpg" alt="" style="width: 100px; max-width: 600px; height: auto; margin: auto; display: block;">
                 <span class="position" style="color:black; font-weight: bold; text-align:left">Cliente: '.$cliente->nome.'</span>
+                <br>
                 <span class="position" style="color:black; font-weight: bold; text-align:left">Descrição:</span>
                 <br>
                 <br>
@@ -102,7 +103,6 @@ class OrcamentoController {
                 </span>
             <div style="text-align:center" >
                 <p><a href="http://resolveu.kinghost.net/app_resolveu/public/prestadores/visualizarSolicitacao/1/'.$cliente->nome.'/'.$id.'" class="btn btn-primary" style="border-radius: 5px;background: #17bebb;color: #ffffff; padding: 10px 15px; display: inline-block;">Aceitar</a></p>
-                <p><a href="http://resolveu.kinghost.net/app_resolveu/public/visualizarSolicitacao/2/'.$cliente->nome.'" style="border-radius: 5px;background: #dc3545; color: #ffffff; padding: 10px 15px; display: inline-block;">Recusar</a></p>
                 </div>
             </div>
         </td>';
@@ -481,7 +481,7 @@ class OrcamentoController {
         </body>
         </html>';
         
-        $email_headers = implode ( "\n",array ( "From: $email_remetente", "Reply-To: $email_reply", "Return-Path: $email_remetente","MIME-Version: 1.0","Content-Type: text/html; charset=UTF-8" ) );
+        $email_headers = implode ( "\n",array ( "From: ResolveU <".$email_remetente.">", "Reply-To: ResolveU <".$email_reply.">", "Return-Path: $email_remetente","MIME-Version: 1.0","Content-Type: text/html; charset=UTF-8" ) );
         $email=$prestador->email;
 
        if (mail($email, $email_assunto, $email_conteudo, $email_headers)){ 
