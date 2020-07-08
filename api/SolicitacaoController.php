@@ -91,12 +91,12 @@ class SolicitacaoController {
           <span class="position"><b style="color:#213b52">Nome do prestador:</b> '.$prestador->nome.'</span><br>
         <span class="position"><b style="color:#213b52">Telefone: </b>'.$prestador->fone.'</span><br>
         <span class="position"><b style="color:#213b52">Endereço:</b> '.$prestador->endereco.'</span><br><br>
-        <a href="https://www.google.com/maps/search/'.$prestador->endereco.'" style="color:green" >Ver no mapa</a><br>
+        <a href="https://www.google.com/maps/search/'.$prestador->cidade.' '.$prestador->endereco.'" style="color:green" >Ver no mapa</a><br>
         <a href="#" style="color:green" >Ver perfil no site</a>
       
         </div><br><br>
         <span style="color:#213b52">Se você gostou do serviço deste prestador avalie</span><br><br>
-        <a href="http://resolveu.kinghost.net/app_resolveu/public/prestadores/recomendarPrestador/'.$prestador->id.'" style="border-radius: 5px;background: #28a745;color: #ffffff; padding: 10px 15px; display: inline-block;" > '.json_decode('&#128077').' Gostei</a> | <a href="http://resolveu.kinghost.net/app_resolveu/public/prestadores/naoRecomendarPrestador/'.$prestador->id.'" style="border-radius: 5px;background: #dc3545;color: #ffffff; padding: 10px 15px; display: inline-block;"> '.json_decode('&#128078').' Não gostei</a>
+        <a href="http://resolveu.kinghost.net/app_resolveu/public/prestadores/recomendarPrestador/'.$prestador->id.'" style="border-radius: 5px;background: #28a745;color: #ffffff; padding: 10px 15px; display: inline-block;" > &#x1f44d; Gostei</a> | <a href="http://resolveu.kinghost.net/app_resolveu/public/prestadores/naoRecomendarPrestador/'.$prestador->id.'" style="border-radius: 5px;background: #dc3545;color: #ffffff; padding: 10px 15px; display: inline-block;"> &#x1f44e; Não gostei</a>
        </div>
   </td>
 ';
