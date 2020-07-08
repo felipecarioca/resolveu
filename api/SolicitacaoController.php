@@ -92,7 +92,7 @@ class SolicitacaoController {
         <span class="position"><b style="color:#213b52">Telefone: </b>'.$prestador->fone.'</span><br>
         <span class="position"><b style="color:#213b52">Endereço:</b> '.$prestador->endereco.'</span><br><br>
         <a href="https://www.google.com/maps/search/'.$prestador->cidade.' '.$prestador->endereco.'" style="color:green" >Ver no mapa</a><br>
-        <a href="#" style="color:green" >Ver perfil no site</a>
+        <a href="http://localhost/app_resolveu/public/prestadores/verPerfil/'.$prestador->id.'" style="color:green" >Ver perfil no site</a>
       
         </div><br><br>
         <span style="color:#213b52">Se você gostou do serviço deste prestador avalie</span><br><br>
